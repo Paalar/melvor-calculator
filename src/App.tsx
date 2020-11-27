@@ -1,15 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { expTableAsLvls } from 'data/experienceTable';
-import Dropdown from 'react-dropdown';
+import Calculator from 'components/Calculator';
 
 const App = () => {
-  return (
-    <div className="App">
-      <Dropdown options={expTableAsLvls()} value={expTableAsLvls()[98]} />
-    </div>
-  );
+  return <Calculator />;
 }
 
 export default App;
