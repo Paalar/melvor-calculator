@@ -1,9 +1,9 @@
 import React from "react";
-import { SkillNames } from "./common/skillNames";
-import Header from "./Header";
+import { SkillNamesType } from "./common/skillNames";
+import Header from "./components/Header";
 
 interface Props {
-    pageName: keyof typeof SkillNames;
+    pageName: SkillNamesType;
 }
 
 const Page: React.FC<Props> = ({ pageName, children }) => {
