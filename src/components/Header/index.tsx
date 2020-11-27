@@ -9,6 +9,7 @@ interface Props {
 }
 
 const HeaderWrapper = styled.header<Props>`
+    grid-area: header;
     display: flex;
     justify-content: center;
     align-items: center;
