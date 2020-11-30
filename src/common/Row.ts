@@ -4,8 +4,8 @@ const Row = styled.div`
     display: flex;
     flex-direction:row;
     align-items: center;
-    &:first-child {
-        margin-right: 1rem;
+    & > :first-child {
+        margin-right: 0.5rem;
     }
 `;
 

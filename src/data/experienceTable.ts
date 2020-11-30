@@ -7,5 +7,6 @@ export const expTableToString = () => experienceTable.map(row => row.toString())
 export const expTableAsLvls = () => experienceTable.map((row, index) => (index + 1).toString())
 export const experienceDifference = (currentLvl: number, targetLvl: number) => experienceTable[targetLvl] - experienceTable[currentLvl]
 export const calculateNumberOfActions = (difference: number, expPerAction: number) => Math.ceil(difference/expPerAction)
+export const calculateSecondsToTargetLvl = (expDifference: number, expPerSecond: number) => Math.ceil(expDifference/expPerSecond)
 
 export default experienceTable
