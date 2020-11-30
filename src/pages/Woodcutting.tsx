@@ -3,14 +3,7 @@ import QualityPicker from "components/QualityPicker";
 import { useState } from "react";
 import ReactDropdown from "react-dropdown";
 import styled from "styled-components";
-
-const Row = styled.div`
-    display: flex;
-    flex-direction:row;
-    & > h2 {
-        margin: 0;
-    }
-`;
+import Row from "common/Row";
 
 const Card = styled.article`
     background-color: #4a5568;
