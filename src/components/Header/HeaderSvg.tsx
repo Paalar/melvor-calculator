@@ -5,6 +5,15 @@ import Icon from "../Icon";
 
 
 const Wrapper = styled.div`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    grid-column-start:2;
+`;
+
+const WhiteBackground = styled.div`
     height: 40px;
     width: 40px;
     border-radius: 8px;
@@ -22,7 +31,9 @@ interface Props {
 const HeaderSvg: React.FC<Props> = ({ name }) => {
     return (
         <Wrapper>
-            <Icon pageName={name} />
+            <WhiteBackground>
+                <Icon pageName={name} />
+            </WhiteBackground>
         </Wrapper>
     );
 }
