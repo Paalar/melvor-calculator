@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import NumberInputField from "components/NumberInputField";
 import Row from "common/Row";
 import { getTimeText } from "utils/getTime";
+import { getCommaNumbers } from "utils/getCommaNumbers";
 
 type Props = {
   xpa: number;
@@ -18,7 +19,6 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
   const expToTarget = experienceDifference(Number(currentLvl) - 1, Number(targetLvl) - 1);
   const actionsToTarget = calculateNumberOfActions(expToTarget, Number(xpa));
   const secondsToTarget = calculateSecondsToTargetLvl(expToTarget, xps);
-  const timeToTarget = getTimeText(secondsToTarget);
 
   useEffect(() => {
     const numberCurrent = Number(currentLvl);
@@ -39,15 +39,15 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
       </Row>
       <Row>
         <p>Experience to reach target:</p>
-        <p>{currentLvl.length && targetLvl.length ? expToTarget : null}</p>
+        <p>{currentLvl.length && targetLvl.length ? getCommaNumbers(expToTarget) : null}</p>
       </Row>
       <Row>
         <p>Number of actions:</p>
-        <p>{currentLvl.length && targetLvl.length ? actionsToTarget : null}</p>
+        <p>{currentLvl.length && targetLvl.length ? getCommaNumbers(actionsToTarget) : null}</p>
       </Row>
       <Row>
         <p>Time to completion (if constant):</p>
-        <p>{currentLvl.length && targetLvl.length ? timeToTarget : null}</p>
+        <p>{currentLvl.length && targetLvl.length ? getTimeText(secondsToTarget) : null}</p>
       </Row>
     </>)
 };
