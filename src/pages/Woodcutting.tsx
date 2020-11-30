@@ -19,12 +19,27 @@ const Card = styled.article`
     border-radius: .5rem;
     padding: 1rem;
     margin: 1.25rem;
+
+    & > h2 {
+        margin: 0;
+    }
+`;
+
+const CalculatorCard = styled(Card)`
+    grid-area: bottom;
+`;
+
+const WoodcuttingPage = styled.div`
+    display: grid;
+    grid-template-areas: 
+        'top-left top-right'
+        'bottom bottom';
 `;
 
 const Woodcutting: React.FC = () => {
     const [multi, setMulti] = useState<boolean>(false);
     return (
-        <>
+        <WoodcuttingPage>
             <Card>
                 <h2>Extras</h2>
                 <Row>
@@ -44,11 +59,11 @@ const Woodcutting: React.FC = () => {
                 </Row>
                 {multi && (<Row><p>Tree 2</p><TreeTypePicker /></Row>)}
             </Card>
-            <Card>
-
+            <CalculatorCard>
+                <h2>Calculator</h2>
                 <Calculator />
-            </Card>
-        </>
+            </CalculatorCard>
+        </WoodcuttingPage>
     );
 }
 
