@@ -23,7 +23,7 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
   useEffect(() => {
     const numberCurrent = Number(currentLvl);
     const numberTarget = Number(targetLvl);
-    if (numberCurrent >= numberTarget) {
+    if (numberCurrent >= numberTarget && numberTarget) {
       setCurrentLvl((numberCurrent - 1).toString())
     }
   }, [currentLvl, targetLvl])
