@@ -1,6 +1,7 @@
 import { expTableAsLvls, calculateNumberOfActions, experienceDifference } from "data/experienceTable";
 import React, { ChangeEvent, FC, useState } from "react";
 import Dropdown, { Option } from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const Calculator: FC = () => {
   const [currentLvl, setCurrentLvl] = useState<string | number>(1);
@@ -16,7 +17,7 @@ const Calculator: FC = () => {
       setCurrentLvl(1);
     }
     else if (numberValue >= targetLvl - 1) {
-      setCurrentLvl(targetLvl- 1);
+      setCurrentLvl(targetLvl - 1);
     }
     else {
       setCurrentLvl(numberValue)
@@ -40,9 +41,9 @@ const Calculator: FC = () => {
   }
   return (
     <div className="App">
-      <input type="number" value={currentLvl} onChange={onChangeCurrentLvl}/>
-      <Dropdown options={expTableAsLvls()} value={targetLvl.toString()} onChange={onChangeTargetLvl}/>
-      <input type="number" value={expPerAction} onChange={onChangeExpPerAction}/>
+      <input type="number" value={currentLvl} onChange={onChangeCurrentLvl} />
+      <Dropdown options={expTableAsLvls()} value={targetLvl.toString()} onChange={onChangeTargetLvl} />
+      <input type="number" value={expPerAction} onChange={onChangeExpPerAction} />
       {typeof currentLvl === "number" && typeof expPerAction === "number" ? calculateNumberOfActions(experienceDifference(currentLvl - 1, targetLvl - 1), expPerAction) : null}
     </div>)
 };
