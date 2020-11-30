@@ -35,18 +35,18 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
       </Row>
       <Row>
         <p>Target level</p>
-        <NumberInputField value={targetLvl} onValueChange={onChangeTargetLvl} max={99} min={1} />
+        <NumberInputField value={targetLvl} onValueChange={onChangeTargetLvl} max={99} min={2} />
       </Row>
       <Row>
-        <p>Experience to target</p>
+        <p>Experience to reach target:</p>
         <p>{currentLvl.length && targetLvl.length ? expToTarget : null}</p>
       </Row>
       <Row>
-        <p>Number of actions</p>
+        <p>Number of actions:</p>
         <p>{currentLvl.length && targetLvl.length ? actionsToTarget : null}</p>
       </Row>
       <Row>
-        <p>Seconds to completion (if constant)</p>
+        <p>Time to completion (if constant):</p>
         <p>{currentLvl.length && targetLvl.length ? timeToTarget : null}</p>
       </Row>
     </>)
