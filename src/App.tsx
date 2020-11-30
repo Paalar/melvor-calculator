@@ -4,7 +4,8 @@ import "./App.css";
 import Calculator from "components/Calculator";
 import styled from "styled-components";
 import Menu from "components/Menu";
-import { SkillNamesType } from "common/skillNames";
+import { SkillNamesEnum, SkillNamesType } from "common/skillNames";
+import Woodcutting from "pages/Woodcutting";
 
 const PageDivider = styled.div`
   display: grid;
@@ -14,15 +15,27 @@ const PageDivider = styled.div`
   grid-template-columns: 1fr 3fr;
 `;
 
+const pageSelector = (pageName: SkillNamesType) => {
+  switch (pageName) {
+    case SkillNamesEnum[SkillNamesEnum.Attack]:
+      return Calculator
+    case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
+      return Woodcutting
+    default:
+      return Calculator
+  }
+}
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<SkillNamesType>("Attack");
+  const [currentPageName, setCurrentPageName] = useState<SkillNamesType>("Attack");
+
+  const CurrentComponent = pageSelector(currentPageName);
   return (
     <PageDivider className="App">
-      <Page pageName={currentPage}>
-        <Calculator />
+      <Page pageName={currentPageName}>
+        <CurrentComponent />
       </Page>
-      <Menu setPage={setCurrentPage} />
+      <Menu setPage={setCurrentPageName} />
     </PageDivider>
   );
 }

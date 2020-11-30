@@ -34,7 +34,7 @@ interface Props {
 const Menu: React.FC<Props> = ({ setPage }) => {
     const sectionsWithoutIntIndices = Object.keys(SkillNamesEnum).filter(key => Number.isNaN(Number(key)));
     const sections = (sectionsWithoutIntIndices as SkillNamesType[]).map(pageName =>
-        <MenuItem onClick={() => setPage(pageName)}>
+        <MenuItem onClick={() => setPage(pageName)} key={pageName}>
             <Icon pageName={pageName} size="24px" />
             {pageName}
         </MenuItem>
