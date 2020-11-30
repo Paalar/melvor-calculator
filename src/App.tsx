@@ -3,6 +3,7 @@ import Page from "./Page";
 import "./App.css";
 import Calculator from "components/Calculator";
 import styled from "styled-components";
+import Menu from "components/Menu";
 
 const PageDivider = styled.div`
   display: grid;
@@ -19,7 +20,7 @@ function App() {
       <Page pageName="Runecrafting">
         <Calculator />
       </Page>
-      <div />
+      <Menu />
     </PageDivider>
   );
 }
