@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC } from "react";
+import styled from "styled-components";
 
 type Props = {
     value: number | string;
@@ -28,8 +29,17 @@ const NumberInputField: FC<Props> = ({value, onValueChange, max, min}) => {
         }
     };
     return (
-        <input type="number" value={value} onChange={onChange} />
+        <InputContainer type="number" value={value} onChange={onChange} />
     )
 }
+
+const InputContainer = styled.input`
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2px;
+    &:focus {
+        outline: none;
+    }
+`
 
 export default NumberInputField;
