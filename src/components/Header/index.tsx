@@ -10,9 +10,8 @@ interface Props {
 
 const HeaderWrapper = styled.header<Props>`
     grid-area: header;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 0.2fr 0.8fr 1fr;
     background-color: ${(props) => getColor(props.pageName)};
 `;
 
@@ -22,6 +21,7 @@ const HeaderText = styled.h1`
     padding: 2rem 0;
     font-family: 'Roboto';
     color: white;
+    text-align: start;
 `;
 
 const Header: React.FC<Props> = ({ pageName }) => {

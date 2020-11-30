@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Page from "./Page";
 import "./App.css";
 import Calculator from "components/Calculator";
 import styled from "styled-components";
 import Menu from "components/Menu";
+import { SkillNamesType } from "common/skillNames";
 
 const PageDivider = styled.div`
   display: grid;
@@ -15,12 +16,13 @@ const PageDivider = styled.div`
 
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<SkillNamesType>("Attack");
   return (
     <PageDivider className="App">
-      <Page pageName="Runecrafting">
+      <Page pageName={currentPage}>
         <Calculator />
       </Page>
-      <Menu />
+      <Menu setPage={setCurrentPage} />
     </PageDivider>
   );
 }
