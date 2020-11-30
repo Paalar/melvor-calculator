@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDropdown from "react-dropdown";
+import ReactDropdown, { Option } from "react-dropdown";
 
 export enum QualitiesEnum {
     Bronze,
@@ -13,7 +12,12 @@ export enum QualitiesEnum {
 }
 
 const qualityStrings = Object.keys(QualitiesEnum).filter(key => Number.isNaN(Number(key)));
+const qualityOptions: Option[] = (qualityStrings as (keyof typeof QualitiesEnum)[]).map(
+    quality => ({ value: QualitiesEnum[quality].toString(), label: quality }));
 
-const QualityPicker: React.FC = () => <ReactDropdown options={qualityStrings} />
+interface Props {
+    onChange: (chosenQuality: Option) => void;
+}
+const QualityPicker: React.FC<Props> = ({ onChange }) => <ReactDropdown options={qualityOptions} onChange={onChange} />
 
 export default QualityPicker;

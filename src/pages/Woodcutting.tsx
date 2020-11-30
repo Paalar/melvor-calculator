@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import ReactDropdown, { Option } from "react-dropdown";
 import styled from "styled-components";
-import ReactDropdown from "react-dropdown";
 import ExperienceCalculator from "components/Calculator/ExperienceCalculator"
 import QualityPicker from "components/QualityPicker";
 import Row from "common/Row";
@@ -30,31 +30,34 @@ const WoodcuttingPage = styled.div`
 `;
 
 const Woodcutting: React.FC = () => {
-    const [multi, setMulti] = useState<boolean>(false);
+    const [multitree, setMultitree] = useState<boolean>(false);
+    const [speedReduction, setSpeedReduction] = useState<number>(0);
+
+
     return (
         <WoodcuttingPage>
             <Card>
                 <h2>Extras</h2>
                 <Row>
-                    <input type="checkbox" onChange={() => setMulti(!multi)} />
+                    <input type="checkbox" onChange={() => setMultitree(!multitree)} />
                     <p>Multi-tree</p>
                 </Row>
                 <Row>
                     <p>Axe</p>
-                    <QualityPicker />
+                    <QualityPicker onChange={(option) => setSpeedReduction(axeSpeeds[Number(option.value)])} />
                 </Row>
             </Card>
             <Card>
                 <h2>Tree type(s)</h2>
                 <Row>
                     <p>Tree</p>
-                    <TreeTypePicker />
+                    <TreeTypePicker speedReduction={speedReduction} />
                 </Row>
-                {multi && (<Row><p>Tree 2</p><TreeTypePicker /></Row>)}
+                {multitree && (<Row><p>Tree 2</p><TreeTypePicker speedReduction={speedReduction} /></Row>)}
             </Card>
             <CalculatorCard>
                 <h2>Calculator</h2>
-                <ExperienceCalculator xpa={treeTypes.Magic} xps={21} />
+                <ExperienceCalculator xpa={xpPerTreeType.Magic} xps={21} />
             </CalculatorCard>
         </WoodcuttingPage>
     );
@@ -62,7 +65,9 @@ const Woodcutting: React.FC = () => {
 
 export default Woodcutting;
 
-const treeTypes = {
+const axeSpeeds = [5, 15, 20, 30, 35, 40, 50];
+
+const xpPerTreeType = {
     Normal: 10,
     Oak: 15,
     Willow: 22,
@@ -71,6 +76,30 @@ const treeTypes = {
     Mahogany: 60,
     Yew: 80,
     Magic: 100,
+    Redwood: 180
 }
 
-const TreeTypePicker: React.FC = () => <ReactDropdown options={Object.keys(treeTypes)} />;
+const cutTimePerTreeType = {
+    Normal: 3,
+    Oak: 4,
+    Willow: 5,
+    Teak: 6,
+    Maple: 8,
+    Mahogany: 10,
+    Yew: 12,
+    Magic: 20,
+    Redwood: 15
+}
+
+
+const TreeTypePicker: React.FC<{ speedReduction: number }> = ({ speedReduction }) => {
+
+    const getXpsPerTree = (treeName: keyof typeof xpPerTreeType) => xpPerTreeType[treeName] / (cutTimePerTreeType[treeName] * speedReduction)
+    const treeTypesAsDropdownOptions: Option[] = Object.keys(xpPerTreeType).map(key => ({ value: getXpsPerTree((key as keyof typeof xpPerTreeType)).toString(), label: key }));
+
+    return (
+        <>
+            <ReactDropdown options={treeTypesAsDropdownOptions} />
+        </>
+    )
+};
