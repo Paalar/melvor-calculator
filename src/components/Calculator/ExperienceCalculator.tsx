@@ -12,6 +12,8 @@ import styled from "styled-components";
 import { Card } from "common/Card";
 
 type Props = {
+  currentLvl: string;
+  onCurrentLvlChange: (lvl: string) => void;
   xpa: number;
   xps: number;
 };
@@ -20,10 +22,8 @@ const CalculatorCard = styled(Card)`
   grid-area: bottom;
 `;
 
-const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
-  const [currentLvl, setCurrentLvl] = useState<string>("1");
-  const [targetLvl, setTargetLvl] = useState<string>("99");
-  const onChangeCurrentLvl = (value: string) => setCurrentLvl(value);
+const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentLvl, onCurrentLvlChange }) => {
+  const [targetLvl, setTargetLvl] = useState<string>("99")
   const onChangeTargetLvl = (value: string) => setTargetLvl(value);
 
   const expToTarget = experienceDifference(
@@ -37,20 +37,15 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
     const numberCurrent = Number(currentLvl);
     const numberTarget = Number(targetLvl);
     if (numberCurrent >= numberTarget && numberTarget) {
-      setCurrentLvl((numberTarget - 1).toString());
+      onCurrentLvlChange((numberTarget - 1).toString())
     }
-  }, [currentLvl, targetLvl]);
+  }, [currentLvl, targetLvl, onCurrentLvlChange])
   return (
     <CalculatorCard>
       <h2>Calculator</h2>
       <Row>
         <p>Current level</p>
-        <NumberInputField
-          value={currentLvl}
-          onValueChange={onChangeCurrentLvl}
-          max={99}
-          min={1}
-        />
+        <NumberInputField value={currentLvl} onValueChange={onCurrentLvlChange} max={99} min={1} />
       </Row>
       <Row>
         <p>Target level</p>
