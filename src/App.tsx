@@ -9,25 +9,27 @@ import "./App.css";
 
 const PageDivider = styled.div`
   display: grid;
-  grid-template-areas: 
-    'header header'
-    'menu content';
+  grid-template-areas:
+    "header header"
+    "menu content";
   grid-template-columns: 1fr 3fr;
 `;
 
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Attack]:
-      return ExperienceCalculator
+      return ExperienceCalculator;
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
-      return Woodcutting
+      return Woodcutting;
     default:
-      return ExperienceCalculator
+      return ExperienceCalculator;
   }
-}
+};
 
 function App() {
-  const [currentPageName, setCurrentPageName] = useState<SkillNamesType>("Attack");
+  const [currentPageName, setCurrentPageName] = useState<SkillNamesType>(
+    "Attack"
+  );
 
   const CurrentComponent = pageSelector(currentPageName);
   return (
