@@ -99,4 +99,4 @@ const Woodcutting: React.FC = () => {
 
 export default Woodcutting;
 
-const axeSpeeds = [0, 5, 15, 20, 30, 35, 40, 50];
+const axeSpeeds = [1, 1.05, 1.15, 1.20, 1.30, 1.35, 1.40, 1.50];
