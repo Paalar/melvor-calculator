@@ -18,11 +18,11 @@ const PageDivider = styled.div`
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Attack]:
-      return ExperienceCalculator
+      return ExperienceCalculator;
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
       return Woodcutting;
     default:
-      return ExperienceCalculator
+      return ExperienceCalculator;
   }
 };
 

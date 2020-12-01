@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Option } from "react-dropdown";
 import styled from "styled-components";
 import Row from "common/Row";
-import TreeTypePicker, { xpPerTreeType } from './TreeTypePicker';
+import TreeTypePicker, { xpPerTreeType } from "./TreeTypePicker";
 import _ from "lodash";
 
 const Card = styled.article`
@@ -35,14 +35,18 @@ const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
   const [speedReduction, setSpeedReduction] = useState<number>(0);
   const [xps, setXps] = useState<number[]>([]);
-  const [selectedTrees, setSelectedTrees] = useState<(keyof typeof xpPerTreeType)[] | []>([]);
+  const [selectedTrees, setSelectedTrees] = useState<
+    (keyof typeof xpPerTreeType)[] | []
+  >([]);
 
   const setXpPerTree = (treeNumber: number, option: Option) => {
     const oldXps = [...xps];
     oldXps[treeNumber] = Number(option.value);
     setXps(oldXps);
     const prevTrees = [...selectedTrees];
-    prevTrees[treeNumber] = option.label ? (option.label.toString() as keyof typeof xpPerTreeType) : 'Normal';
+    prevTrees[treeNumber] = option.label
+      ? (option.label.toString() as keyof typeof xpPerTreeType)
+      : "Normal";
     setSelectedTrees(prevTrees);
   };
 
@@ -84,7 +88,10 @@ const Woodcutting: React.FC = () => {
       </Card>
       <CalculatorCard>
         <h2>Calculator</h2>
-        <ExperienceCalculator xpa={xpPerTreeType[selectedTrees[0]]} xps={_.sum(xps)} />
+        <ExperienceCalculator
+          xpa={xpPerTreeType[selectedTrees[0]]}
+          xps={_.sum(xps)}
+        />
       </CalculatorCard>
     </WoodcuttingPage>
   );
