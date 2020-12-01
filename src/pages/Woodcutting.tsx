@@ -1,8 +1,8 @@
-import Calculator from "components/Calculator"
-import QualityPicker from "components/QualityPicker";
-import { useState } from "react";
-import ReactDropdown from "react-dropdown";
+import React, { useState } from "react";
 import styled from "styled-components";
+import ReactDropdown from "react-dropdown";
+import ExperienceCalculator from "components/Calculator/ExperienceCalculator"
+import QualityPicker from "components/QualityPicker";
 import Row from "common/Row";
 
 const Card = styled.article`
@@ -54,7 +54,7 @@ const Woodcutting: React.FC = () => {
             </Card>
             <CalculatorCard>
                 <h2>Calculator</h2>
-                <Calculator />
+                <ExperienceCalculator xpa={treeTypes.Magic} xps={21} />
             </CalculatorCard>
         </WoodcuttingPage>
     );
