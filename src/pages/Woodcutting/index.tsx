@@ -5,6 +5,7 @@ import { Option } from "react-dropdown";
 import styled from "styled-components";
 import Row from "common/Row";
 import TreeTypePicker from './TreeTypePicker';
+import _ from "lodash";
 
 const Card = styled.article`
   background-color: #4a5568;
@@ -79,7 +80,7 @@ const Woodcutting: React.FC = () => {
       </Card>
       <CalculatorCard>
         <h2>Calculator</h2>
-        <ExperienceCalculator />
+        <ExperienceCalculator xpa={10} xps={_.sum(xps)} />
       </CalculatorCard>
     </WoodcuttingPage>
   );
