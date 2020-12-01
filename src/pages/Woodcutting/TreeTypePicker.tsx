@@ -25,16 +25,16 @@ const cutTimePerTreeType = {
 };
 
 interface TreePickerProps {
-  speedReduction: number;
+  speedIncrease: number;
   onChange: (option: Option) => void;
 }
 const TreeTypePicker: React.FC<TreePickerProps> = ({
-  speedReduction,
+  speedIncrease,
   onChange,
 }) => {
   const getXpsPerTree = (treeName: keyof typeof xpPerTreeType) =>
     xpPerTreeType[treeName] /
-    (cutTimePerTreeType[treeName] * speedReduction);
+    (cutTimePerTreeType[treeName] * speedIncrease);
   const treeTypeDropdownOptions: Option[] = Object.keys(xpPerTreeType).map(
     (key) => ({
       value: getXpsPerTree(key as keyof typeof xpPerTreeType).toString(),

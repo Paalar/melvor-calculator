@@ -11,7 +11,7 @@ import { Card } from "common/Card";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
-  const [speedReduction, setSpeedReduction] = useState<number>(0);
+  const [speedIncrease, setspeedIncrease] = useState<number>(0);
   const [xps, setXps] = useState<number[]>([]);
   const [selectedTrees, setSelectedTrees] = useState<
     (keyof typeof xpPerTreeType)[] | []
@@ -40,7 +40,7 @@ const Woodcutting: React.FC = () => {
           <p>Axe</p>
           <QualityPicker
             onChange={(option) =>
-              setSpeedReduction(axeSpeeds[Number(option.value)])
+              setspeedIncrease(axeSpeeds[Number(option.value)])
             }
           />
         </Row>
@@ -50,7 +50,7 @@ const Woodcutting: React.FC = () => {
         <Row>
           <p>Tree</p>
           <TreeTypePicker
-            speedReduction={speedReduction}
+            speedIncrease={speedIncrease}
             onChange={(option) => setXpPerTree(0, option)}
           />
         </Row>
@@ -58,7 +58,7 @@ const Woodcutting: React.FC = () => {
           <Row>
             <p>Tree 2</p>
             <TreeTypePicker
-              speedReduction={speedReduction}
+              speedIncrease={speedIncrease}
               onChange={(option) => setXpPerTree(1, option)}
             />
           </Row>
