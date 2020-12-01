@@ -2,34 +2,12 @@ import ExperienceCalculator from "components/Calculator/ExperienceCalculator";
 import QualityPicker from "components/QualityPicker";
 import { useState } from "react";
 import { Option } from "react-dropdown";
-import styled from "styled-components";
 import Row from "common/Row";
 import TreeTypePicker, { xpPerTreeType } from "./TreeTypePicker";
 import _ from "lodash";
+import { Card } from "common/Card";
 
-const Card = styled.article`
-  background-color: #4a5568;
-  color: #f5f5f5;
-  box-shadow: 0 1px 2px rgb(33 34 35/50%), 0 1px 2px rgb(26 26 27/50%);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin: 1.25rem;
 
-  & > h2 {
-    margin: 0;
-  }
-`;
-
-const CalculatorCard = styled(Card)`
-  grid-area: bottom;
-`;
-
-const WoodcuttingPage = styled.div`
-  display: grid;
-  grid-template-areas:
-    "top-left top-right"
-    "bottom bottom";
-`;
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
@@ -51,7 +29,7 @@ const Woodcutting: React.FC = () => {
   };
 
   return (
-    <WoodcuttingPage>
+    <>
       <Card>
         <h2>Extras</h2>
         <Row>
@@ -86,14 +64,11 @@ const Woodcutting: React.FC = () => {
           </Row>
         )}
       </Card>
-      <CalculatorCard>
-        <h2>Calculator</h2>
-        <ExperienceCalculator
-          xpa={xpPerTreeType[selectedTrees[0]]}
-          xps={_.sum(xps)}
-        />
-      </CalculatorCard>
-    </WoodcuttingPage>
+      <ExperienceCalculator
+        xpa={xpPerTreeType[selectedTrees[0]]}
+        xps={_.sum(xps)}
+      />
+    </>
   );
 };
 

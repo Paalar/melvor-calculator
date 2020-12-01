@@ -8,11 +8,17 @@ import NumberInputField from "components/NumberInputField";
 import Row from "common/Row";
 import { getTimeText } from "utils/getTime";
 import { getCommaNumbers } from "utils/getCommaNumbers";
+import styled from "styled-components";
+import { Card } from "common/Card";
 
 type Props = {
   xpa: number;
   xps: number;
 };
+
+const CalculatorCard = styled(Card)`
+  grid-area: bottom;
+`;
 
 const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
   const [currentLvl, setCurrentLvl] = useState<string>("1");
@@ -35,7 +41,8 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
     }
   }, [currentLvl, targetLvl]);
   return (
-    <>
+    <CalculatorCard>
+      <h2>Calculator</h2>
       <Row>
         <p>Current level</p>
         <NumberInputField
@@ -78,7 +85,7 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
             : null}
         </p>
       </Row>
-    </>
+    </CalculatorCard>
   );
 };
 
