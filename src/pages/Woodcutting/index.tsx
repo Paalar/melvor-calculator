@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Option } from "react-dropdown";
 import styled from "styled-components";
 import Row from "common/Row";
-import TreeTypePicker from './TreeTypePicker';
+import TreeTypePicker, { xpPerTreeType } from './TreeTypePicker';
 import _ from "lodash";
 
 const Card = styled.article`
@@ -35,11 +35,15 @@ const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
   const [speedReduction, setSpeedReduction] = useState<number>(0);
   const [xps, setXps] = useState<number[]>([]);
+  const [selectedTrees, setSelectedTrees] = useState<(keyof typeof xpPerTreeType)[] | []>([]);
 
   const setXpPerTree = (treeNumber: number, option: Option) => {
     const oldXps = [...xps];
     oldXps[treeNumber] = Number(option.value);
     setXps(oldXps);
+    const prevTrees = [...selectedTrees];
+    prevTrees[treeNumber] = option.label ? (option.label.toString() as keyof typeof xpPerTreeType) : 'Normal';
+    setSelectedTrees(prevTrees);
   };
 
   return (
@@ -80,7 +84,7 @@ const Woodcutting: React.FC = () => {
       </Card>
       <CalculatorCard>
         <h2>Calculator</h2>
-        <ExperienceCalculator xpa={10} xps={_.sum(xps)} />
+        <ExperienceCalculator xpa={xpPerTreeType[selectedTrees[0]]} xps={_.sum(xps)} />
       </CalculatorCard>
     </WoodcuttingPage>
   );
@@ -88,4 +92,4 @@ const Woodcutting: React.FC = () => {
 
 export default Woodcutting;
 
-const axeSpeeds = [5, 15, 20, 30, 35, 40, 50];
+const axeSpeeds = [0, 5, 15, 20, 30, 35, 40, 50];

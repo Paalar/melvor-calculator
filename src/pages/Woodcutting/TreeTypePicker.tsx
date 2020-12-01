@@ -1,6 +1,6 @@
 import ReactDropdown, { Option } from "react-dropdown";
 
-const xpPerTreeType = {
+export const xpPerTreeType = {
     Normal: 10,
     Oak: 15,
     Willow: 22,
