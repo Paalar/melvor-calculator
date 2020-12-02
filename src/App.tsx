@@ -17,8 +17,6 @@ const PageDivider = styled.div`
 
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
-    case SkillNamesEnum[SkillNamesEnum.Attack]:
-      return ExperienceCalculator;
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
       return Woodcutting;
     default:
@@ -28,7 +26,7 @@ const pageSelector = (pageName: SkillNamesType) => {
 
 function App() {
   const [currentPageName, setCurrentPageName] = useState<SkillNamesType>(
-    "Attack"
+    "Woodcutting"
   );
 
   const CurrentComponent = pageSelector(currentPageName);

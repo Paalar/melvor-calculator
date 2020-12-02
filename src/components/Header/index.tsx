@@ -22,6 +22,7 @@ const HeaderText = styled.h1`
   font-family: "Roboto";
   color: white;
   text-align: start;
+  height: 10vh;
 `;
 
 const Header: React.FC<Props> = ({ pageName }) => {

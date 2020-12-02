@@ -6,8 +6,8 @@ import Row from "common/Row";
 import TreeTypePicker, { xpPerTreeType } from "./TreeTypePicker";
 import _ from "lodash";
 import { Card } from "common/Card";
-
-
+import styled from "styled-components";
+import Checkbox from "components/Checkbox";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
@@ -30,40 +30,44 @@ const Woodcutting: React.FC = () => {
 
   return (
     <>
-      <Card>
-        <h2>Extras</h2>
-        <Row>
-          <input type="checkbox" onChange={() => setMultitree(!multitree)} />
-          <p>Multi-tree</p>
-        </Row>
-        <Row>
-          <p>Axe</p>
-          <QualityPicker
-            onChange={(option) =>
-              setspeedIncrease(axeSpeeds[Number(option.value)])
-            }
-          />
-        </Row>
-      </Card>
-      <Card>
-        <h2>Tree type(s)</h2>
-        <Row>
-          <p>Tree</p>
-          <TreeTypePicker
-            speedIncrease={speedIncrease}
-            onChange={(option) => setXpPerTree(0, option)}
-          />
-        </Row>
-        {multitree && (
+      <LocalExtras>
+        <Card>
+          <h2>Woodcutting Extras</h2>
           <Row>
-            <p>Tree 2</p>
-            <TreeTypePicker
-              speedIncrease={speedIncrease}
-              onChange={(option) => setXpPerTree(1, option)}
+            <Checkbox
+              label="Multi-tree"
+              onChecked={() => setMultitree(!multitree)}
             />
           </Row>
-        )}
-      </Card>
+          <Row>
+            <p>Axe</p>
+            <QualityPicker
+              onChange={(option) =>
+                setspeedIncrease(axeSpeeds[Number(option.value)])
+              }
+            />
+          </Row>
+        </Card>
+        <Card>
+          <h2>Tree type(s)</h2>
+          <Row>
+            <p>Tree</p>
+            <TreeTypePicker
+              speedIncrease={speedIncrease}
+              onChange={(option) => setXpPerTree(0, option)}
+            />
+          </Row>
+          {multitree && (
+            <Row>
+              <p>Tree 2</p>
+              <TreeTypePicker
+                speedIncrease={speedIncrease}
+                onChange={(option) => setXpPerTree(1, option)}
+              />
+            </Row>
+          )}
+        </Card>
+      </LocalExtras>
       <ExperienceCalculator
         xpa={xpPerTreeType[selectedTrees[0]]}
         xps={_.sum(xps)}
@@ -72,6 +76,14 @@ const Woodcutting: React.FC = () => {
   );
 };
 
+const LocalExtras = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  & > * {
+    height: auto;
+  }
+`;
+
 export default Woodcutting;
 
-const axeSpeeds = [1, 1.05, 1.15, 1.20, 1.30, 1.35, 1.40, 1.50];
+const axeSpeeds = [1, 1.05, 1.15, 1.2, 1.3, 1.35, 1.4, 1.5];

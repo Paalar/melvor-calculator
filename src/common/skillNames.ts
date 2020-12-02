@@ -1,12 +1,12 @@
 export enum SkillNamesEnum {
-  "Combat",
-  "Attack",
-  "Strength",
-  "Defence",
-  "Hitpoints",
-  "Ranged",
-  "Prayer",
-  "Slayer",
+  // "Combat",
+  // "Attack",
+  // "Strength",
+  // "Defence",
+  // "Hitpoints",
+  // "Ranged",
+  // "Prayer",
+  // "Slayer",
   "Woodcutting",
   "Fishing",
   "Firemaking",
@@ -19,7 +19,7 @@ export enum SkillNamesEnum {
   "Crafting",
   "Runecrafting",
   "Herblore",
-  "Magic",
+  // "Magic",
 }
 
 export type SkillNamesType = keyof typeof SkillNamesEnum;

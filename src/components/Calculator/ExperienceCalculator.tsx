@@ -16,9 +16,7 @@ type Props = {
   xps: number;
 };
 
-const CalculatorCard = styled(Card)`
-  grid-area: bottom;
-`;
+const CalculatorCard = styled(Card)``;
 
 const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
   const [currentLvl, setCurrentLvl] = useState<string>("1");

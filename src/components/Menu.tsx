@@ -7,19 +7,24 @@ const MenuWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   grid-area: menu;
+  height: 90vh;
+  overflow-y: scroll;
 `;
 
 const MenuItem = styled.button`
-  margin-top: 10px;
-  padding: 5px 0 5px 15px;
+  padding: 10px 0 10px 15px;
   display: flex;
   align-items: center;
   text-decoration: none;
   background-color: white;
   border: none;
+  font-size: 16px;
+  cursor: pointer;
 
   & > img {
     margin-right: 1rem;
+    height: 1.8rem;
+    width: 1.8rem;
   }
 
   &:hover {
