@@ -11,8 +11,8 @@ const Content = styled.section`
   grid-area: content;
   display: grid;
   grid-template-areas:
-   "top-left top-right"
-   "bottom bottom";
+    "top-left top-right"
+    "bottom bottom";
 `;
 const Page: React.FC<Props> = ({ pageName, children }) => {
   return (

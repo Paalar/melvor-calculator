@@ -18,11 +18,11 @@ const PageDivider = styled.div`
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Attack]:
-      return Calculator
+      return Calculator;
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
       return Woodcutting;
     default:
-      return Calculator
+      return Calculator;
   }
 };
 
@@ -35,7 +35,7 @@ function App() {
   return (
     <PageDivider className="App">
       <Page pageName={currentPageName}>
-        <CurrentComponent />
+        <CurrentComponent xpa={0} xps={0} />
       </Page>
       <Menu setPage={setCurrentPageName} />
     </PageDivider>

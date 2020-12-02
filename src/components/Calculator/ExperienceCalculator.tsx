@@ -1,20 +1,15 @@
-import {
-  calculateNumberOfActions,
-  calculateSecondsToTargetLvl,
-  experienceDifference,
-} from "data/experienceTable";
-import React, { FC, useEffect, useState } from "react";
-import NumberInputField from "components/NumberInputField";
+import React, { FC, useState } from "react";
 import Row from "common/Row";
-import { getTimeText } from "utils/getTime";
-import { getCommaNumbers } from "utils/getCommaNumbers";
 import styled from "styled-components";
 import { Card } from "common/Card";
+import Calculations from "./Calculations";
+import CurrentInputField from "./CurrentInputField";
+import NumberInputField from "components/NumberInputField";
 
 type Props = {
-  currentLvl: string;
-  onCurrentLvlChange: (lvl: string) => void;
-  xpa: number;
+  currentExp: string;
+  onCurrentExpChange: (exp: string) => void;
+  xpa?: number;
   xps: number;
 };
 
@@ -22,31 +17,32 @@ const CalculatorCard = styled(Card)`
   grid-area: bottom;
 `;
 
-const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentLvl, onCurrentLvlChange }) => {
-  const [targetLvl, setTargetLvl] = useState<string>("99")
+const ExperienceCalculator: FC<Props> = ({
+  xpa,
+  xps,
+  currentExp,
+  onCurrentExpChange,
+}) => {
+  const [targetLvl, setTargetLvl] = useState<string>("99");
+  const [useLvls, setUseLvls] = useState<boolean>(false);
   const onChangeTargetLvl = (value: string) => setTargetLvl(value);
 
-  const expToTarget = experienceDifference(
-    Number(currentLvl) - 1,
-    Number(targetLvl) - 1
-  );
-  const actionsToTarget = calculateNumberOfActions(expToTarget, Number(xpa));
-  const secondsToTarget = calculateSecondsToTargetLvl(expToTarget, xps);
-
-  useEffect(() => {
-    const numberCurrent = Number(currentLvl);
-    const numberTarget = Number(targetLvl);
-    if (numberCurrent >= numberTarget && numberTarget) {
-      onCurrentLvlChange((numberTarget - 1).toString())
-    }
-  }, [currentLvl, targetLvl, onCurrentLvlChange])
   return (
     <CalculatorCard>
       <h2>Calculator</h2>
       <Row>
-        <p>Current level</p>
-        <NumberInputField value={currentLvl} onValueChange={onCurrentLvlChange} max={99} min={1} />
+        <input
+          type="checkbox"
+          checked={useLvls}
+          onChange={(event) => setUseLvls(event.currentTarget.checked)}
+        />
+        <p>Calculate with levels</p>
       </Row>
+      <CurrentInputField
+        useLvls={useLvls}
+        currentExp={currentExp}
+        onCurrentExpChange={onCurrentExpChange}
+      />
       <Row>
         <p>Target level</p>
         <NumberInputField
@@ -56,30 +52,12 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentLvl, onCurrentLvlCha
           min={2}
         />
       </Row>
-      <Row>
-        <p>Experience to reach target:</p>
-        <p>
-          {currentLvl.length && targetLvl.length
-            ? getCommaNumbers(expToTarget)
-            : null}
-        </p>
-      </Row>
-      <Row>
-        <p>Number of actions:</p>
-        <p>
-          {currentLvl.length && targetLvl.length
-            ? getCommaNumbers(actionsToTarget)
-            : null}
-        </p>
-      </Row>
-      <Row>
-        <p>Time to completion (if constant):</p>
-        <p>
-          {currentLvl.length && targetLvl.length
-            ? getTimeText(secondsToTarget)
-            : null}
-        </p>
-      </Row>
+      <Calculations
+        currentExp={currentExp}
+        targetLvl={targetLvl}
+        xpa={xpa}
+        xps={xps}
+      />
     </CalculatorCard>
   );
 };
