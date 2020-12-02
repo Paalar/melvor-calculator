@@ -1,4 +1,5 @@
 import React from "react";
+import GlobalExtras from "components/GlobalExtras";
 import styled from "styled-components";
 import { SkillNamesType } from "./common/skillNames";
 import Header from "./components/Header";
@@ -18,7 +19,10 @@ const Page: React.FC<Props> = ({ pageName, children }) => {
   return (
     <>
       <Header pageName={pageName} />
-      <Content>{children}</Content>
+      <Content>
+        <GlobalExtras />
+        {children}
+      </Content>
     </>
   );
 };
