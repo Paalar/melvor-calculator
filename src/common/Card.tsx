@@ -1,8 +1,8 @@
 import { FC, ReactNode, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
-const cardCss = css`
+export const Card = styled.article`
   background-color: #4a5568;
   color: #f5f5f5;
   box-shadow: 0 1px 2px rgb(33 34 35/50%), 0 1px 2px rgb(26 26 27/50%);
@@ -14,10 +14,6 @@ const cardCss = css`
   & > h2 {
     margin: 0;
   }
-`;
-
-export const Card = styled.article`
-  ${cardCss}
 `;
 
 type DropdownCardProps = {
@@ -40,8 +36,7 @@ const DropdownCard: FC<DropdownCardProps> = ({ children, title }) => {
   );
 };
 
-const DropDownCardContainer = styled.div`
-  ${cardCss}
+const DropDownCardContainer = styled(Card)`
   svg {
     padding-top: 1rem;
   }
