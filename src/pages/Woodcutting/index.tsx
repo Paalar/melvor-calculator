@@ -61,6 +61,15 @@ const Woodcutting: React.FC = () => {
               excludeTree={xpa[1]}
             />
           </Row>
+          {multitree && (
+            <Row>
+              <p>Tree 2</p>
+              <TreeTypePicker
+                onChange={(option) => setXpPerTree(1, option)}
+                excludeTree={xpa[0]}
+              />
+            </Row>
+          )}
         </Card>
       </LocalExtras>
       <Calculator xps={_.sum(xps)} />
