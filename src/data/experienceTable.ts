@@ -100,6 +100,15 @@ export const experienceTable: number[] = [
   13034431,
 ];
 
+export const getCurrentLvlByXp = (xp: number): number => {
+  for (let i = 0; i < experienceTable.length; i++) {
+    if (xp === experienceTable[i]) return i + 1;
+    if (xp < experienceTable[i]) {
+      return i;
+    }
+  }
+  return NaN;
+};
 export const expTableToString = () =>
   experienceTable.map((row) => row.toString());
 export const expTableAsLvls = () =>
@@ -110,5 +119,16 @@ export const calculateNumberOfActions = (xpDiff: number, xpa: number) =>
   Math.ceil(xpDiff / xpa);
 export const calculateSecondsToTargetLvl = (xpDiff: number, xps: number) =>
   Math.ceil(xpDiff / xps);
-
+export const calculateMasteryXp = (
+  unlockedMilestones: number,
+  playerMastery: number,
+  totalMastery: number,
+  itemMastery: number,
+  totalMilestones: number,
+  secPerAction: number
+) =>
+  ((unlockedMilestones * playerMastery) / totalMastery +
+    itemMastery * (totalMilestones / 10)) *
+  secPerAction *
+  0.5;
 export default experienceTable;

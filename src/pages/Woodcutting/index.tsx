@@ -8,7 +8,7 @@ import { Card } from "common/Card";
 import styled from "styled-components";
 import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
-import { axeCutTimes, getXpsPerTree, TreeName } from "./data";
+import { axeCutTimes, getXpsPerTree, maxMastery, TreeName } from "./data";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const Woodcutting: React.FC = () => {
           )}
         </Card>
       </LocalExtras>
-      <Calculator xps={_.sum(xps)} />
+      <Calculator xps={_.sum(xps)} maxMastery={maxMastery} />
     </>
   );
 };
