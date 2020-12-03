@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ExperienceCalculator from "components/Calculator/ExperienceCalculator";
+import Calculator from "components/Calculator";
 import Menu from "components/Menu";
 import { SkillNamesEnum, SkillNamesType } from "common/skillNames";
 import Woodcutting from "pages/Woodcutting";
@@ -18,11 +18,11 @@ const PageDivider = styled.div`
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Attack]:
-      return ExperienceCalculator;
+      return Calculator;
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
       return Woodcutting;
     default:
-      return ExperienceCalculator;
+      return Calculator;
   }
 };
 
