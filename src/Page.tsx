@@ -10,9 +10,6 @@ interface Props {
 
 const Content = styled.section`
   grid-area: content;
-  display: grid;
-  grid-template-rows: 1fr 1fr auto;
-  grid-template-columns: auto;
   overflow-y: scroll;
   height: 90vh;
 `;
