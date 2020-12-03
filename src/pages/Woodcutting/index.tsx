@@ -5,6 +5,8 @@ import Row from "common/Row";
 import TreeTypePicker from "./TreeTypePicker";
 import _ from "lodash";
 import { Card } from "common/Card";
+import styled from "styled-components";
+import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
 import { axeCutTimes, getXpsPerTree, TreeName } from "./data";
 
@@ -35,43 +37,52 @@ const Woodcutting: React.FC = () => {
 
   return (
     <>
-      <Card>
-        <h2>Extras</h2>
-        <Row>
-          <input type="checkbox" onChange={onCheck} />
-          <p>Multi-tree</p>
-        </Row>
-        <Row>
-          <p>Axe</p>
-          <QualityPicker
-            onChange={(option) =>
-              setTimeReduction(axeCutTimes[Number(option.value)])
-            }
-          />
-        </Row>
-      </Card>
-      <Card>
-        <h2>Tree type(s)</h2>
-        <Row>
-          <p>Tree</p>
-          <TreeTypePicker
-            onChange={(option) => setXpPerTree(0, option)}
-            excludeTree={xpa[1]}
-          />
-        </Row>
-        {multitree && (
+      <LocalExtras>
+        <Card>
+          <h2>Woodcutting Extras</h2>
           <Row>
-            <p>Tree 2</p>
-            <TreeTypePicker
-              onChange={(option) => setXpPerTree(1, option)}
-              excludeTree={xpa[0]}
+            <Checkbox label="Multi-tree" onChecked={onCheck} />
+          </Row>
+          <Row>
+            <p>Axe</p>
+            <QualityPicker
+              onChange={(option) =>
+                setTimeReduction(axeCutTimes[Number(option.value)])
+              }
             />
           </Row>
-        )}
-      </Card>
+        </Card>
+        <Card>
+          <h2>Tree type(s)</h2>
+          <Row>
+            <p>Tree</p>
+            <TreeTypePicker
+              onChange={(option) => setXpPerTree(0, option)}
+              excludeTree={xpa[1]}
+            />
+          </Row>
+          {multitree && (
+            <Row>
+              <p>Tree 2</p>
+              <TreeTypePicker
+                onChange={(option) => setXpPerTree(1, option)}
+                excludeTree={xpa[0]}
+              />
+            </Row>
+          )}
+        </Card>
+      </LocalExtras>
       <Calculator xps={_.sum(xps)} />
     </>
   );
 };
+
+const LocalExtras = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  & > * {
+    height: auto;
+  }
+`;
 
 export default Woodcutting;

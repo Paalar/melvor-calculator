@@ -10,10 +10,12 @@ interface Props {
 const Content = styled.section`
   grid-area: content;
   display: grid;
-  grid-template-areas:
-    "top-left top-right"
-    "bottom bottom";
+  grid-template-rows: 1fr 1fr auto;
+  grid-template-columns: auto;
+  overflow-y: scroll;
+  height: 90vh;
 `;
+
 const Page: React.FC<Props> = ({ pageName, children }) => {
   return (
     <>
