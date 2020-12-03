@@ -5,7 +5,7 @@ const Row = styled.div`
   flex-direction: row;
   align-items: center;
   & > :first-child {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
   }
 `;
 
