@@ -5,6 +5,7 @@ import { Card } from "common/Card";
 import Calculations from "./Calculations";
 import CurrentInputField from "./CurrentInputField";
 import NumberInputField from "components/NumberInputField";
+import Checkbox from "components/Checkbox";
 
 type Props = {
   currentExp: string;
@@ -27,14 +28,12 @@ const ExperienceCalculator: FC<Props> = ({
 
   return (
     <CalculatorCard>
-      <h2>Calculator</h2>
+      <h2>Experience Calculator</h2>
       <Row>
-        <input
-          type="checkbox"
-          checked={useLvls}
-          onChange={(event) => setUseLvls(event.currentTarget.checked)}
+        <Checkbox
+          label="Calculate with levels"
+          onChecked={(checked) => setUseLvls(checked)}
         />
-        <p>Calculate with levels</p>
       </Row>
       <CurrentInputField
         useLvls={useLvls}
