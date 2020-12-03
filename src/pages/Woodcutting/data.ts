@@ -35,6 +35,7 @@ const unlockables: Record<number, number> = {
 };
 
 export const maxMastery = 891;
+export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
 
 export const getNumberOfUnlockables = (): number =>
   Object.values(unlockables).reduce((prev, current) => prev + current, 0);
@@ -44,12 +45,10 @@ export const getNumberOfUnlockedByLvl = (lvl: number) =>
     if (unlockAtLvl <= lvl) return prev + current[1];
     return prev;
   }, 0);
-export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
 
-export const getXpsPerTree = (
-  treeName: TreeName,
-  timeReduction: number
-): number =>
-  xpPerTreeType[treeName] / (cutTimePerTreeType[treeName] * timeReduction);
+export const getSecondsPerTree = (treeName: TreeName, timeReduction: number) =>
+  cutTimePerTreeType[treeName] * timeReduction;
+export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>
+  xpPerTreeType[treeName] / secPerTree;
 
 export type TreeName = keyof typeof xpPerTreeType;

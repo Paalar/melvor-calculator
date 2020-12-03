@@ -12,9 +12,10 @@ type Props = {
   lvl: number;
   maxMastery: number;
   spa: number;
+  name: string;
 };
 
-const MasteryCalculator: FC<Props> = ({ lvl, maxMastery, spa }) => {
+const MasteryCalculator: FC<Props> = ({ lvl, maxMastery, spa, name }) => {
   const [currentMastery, setCurrentMastery] = useState<string>("1");
   const [totalMastery, setTotalMastery] = useState<string>("1");
   const onCurrentMasteryChange = (value: string) => setCurrentMastery(value);
@@ -30,11 +31,12 @@ const MasteryCalculator: FC<Props> = ({ lvl, maxMastery, spa }) => {
   return (
     <>
       <Card>
-        <h2>Mastery Calculator</h2>
+        <h2>Mastery Calculator - {name}</h2>
         <Row>
           <p>
             The mastery calculator is dependent on the skill's current lvl. You
-            will need to update your lvl to get the correct mastery
+            will need to update your lvl to get the correct mastery XP per
+            action.
           </p>
         </Row>
         <Row>

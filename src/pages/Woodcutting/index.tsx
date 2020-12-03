@@ -8,32 +8,43 @@ import { Card } from "common/Card";
 import styled from "styled-components";
 import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
-import { axeCutTimes, getXpsPerTree, maxMastery, TreeName } from "./data";
+import {
+  axeCutTimes,
+  getSecondsPerTree,
+  getXpsPerTree,
+  maxMastery,
+  TreeName,
+} from "./data";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
+  const [skillCape, setSkillcape] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
-  const [xpa, setXpa] = useState<TreeName[]>([]);
+  const [trees, setTrees] = useState<TreeName[]>([]);
   const [xps, setXps] = useState<number[]>([]);
-  const [selectedTrees, setSelectedTrees] = useState<TreeName[]>([]);
+  const [spa, setSpa] = useState<number[]>([]);
 
-  const setXpPerTree = (treeIndex: number, option: Option) => {
-    const oldXpa = [...xpa];
+  const setTree = (treeIndex: number, option: Option) => {
+    const oldXpa = [...trees];
     oldXpa[treeIndex] = option.value as TreeName;
-    setXpa(oldXpa);
-    setSelectedTrees([...selectedTrees]);
+    setTrees(oldXpa);
   };
 
   const onCheck = () => {
     setMultitree(!multitree);
-    if (xpa.length > 1) xpa.pop();
+    if (trees.length > 1) trees.pop();
   };
 
   useEffect(() => {
-    const xps1 = getXpsPerTree(xpa[0], timeReduction);
-    const xps2 = xpa[1] ? getXpsPerTree(xpa[1], timeReduction) : 0;
+    const secPerTree1 =
+      getSecondsPerTree(trees[0], timeReduction) * (skillCape ? 0.5 : 1);
+    const secPerTree2 =
+      getSecondsPerTree(trees[1], timeReduction) * (skillCape ? 0.5 : 1);
+    const xps1 = getXpsPerTree(trees[0], secPerTree1);
+    const xps2 = trees[1] ? getXpsPerTree(trees[1], secPerTree2) : 0;
     setXps([xps1, xps2]);
-  }, [xpa, timeReduction]);
+    setSpa([secPerTree1, secPerTree2]);
+  }, [trees, timeReduction, skillCape]);
 
   return (
     <>
@@ -42,6 +53,12 @@ const Woodcutting: React.FC = () => {
           <h2>Woodcutting Extras</h2>
           <Row>
             <Checkbox label="Multi-tree" onChecked={onCheck} />
+          </Row>
+          <Row>
+            <Checkbox
+              label="Woodcutting skillcape"
+              onChecked={(checked) => setSkillcape(checked)}
+            />
           </Row>
           <Row>
             <p>Axe</p>
@@ -57,22 +74,26 @@ const Woodcutting: React.FC = () => {
           <Row>
             <p>Tree</p>
             <TreeTypePicker
-              onChange={(option) => setXpPerTree(0, option)}
-              excludeTree={xpa[1]}
+              onChange={(option) => setTree(0, option)}
+              excludeTree={trees[1]}
             />
           </Row>
           {multitree && (
             <Row>
               <p>Tree 2</p>
               <TreeTypePicker
-                onChange={(option) => setXpPerTree(1, option)}
-                excludeTree={xpa[0]}
+                onChange={(option) => setTree(1, option)}
+                excludeTree={trees[0]}
               />
             </Row>
           )}
         </Card>
       </LocalExtras>
-      <Calculator xps={_.sum(xps)} maxMastery={maxMastery} />
+      <Calculator
+        xps={_.sum(xps)}
+        maxMastery={maxMastery}
+        items={trees.map((value, index) => ({ name: value, spa: spa[index] }))}
+      />
     </>
   );
 };

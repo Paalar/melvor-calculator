@@ -7,9 +7,10 @@ type Props = {
   xpa?: number;
   xps: number;
   maxMastery: number;
+  items: { name: string; spa: number }[];
 };
 
-const Calculator: FC<Props> = ({ xpa, xps, maxMastery }) => {
+const Calculator: FC<Props> = ({ xpa, xps, maxMastery, items }) => {
   const [currentExp, setCurrentExp] = useState<string>("0");
   const [currentLvl, setCurrentLvl] = useState<number>(Number(currentExp));
   const onChangeCurrentExp = (value: string) => setCurrentExp(value);
@@ -21,7 +22,7 @@ const Calculator: FC<Props> = ({ xpa, xps, maxMastery }) => {
     if (currentExp.length && !Number.isNaN(Number(currentExp))) {
       setCurrentLvl(getCurrentLvlByXp(Number(currentExp)));
     }
-  }, [currentExp, currentLvl]);
+  }, [currentExp]);
   return (
     <>
       <ExperienceCalculator
@@ -30,7 +31,14 @@ const Calculator: FC<Props> = ({ xpa, xps, maxMastery }) => {
         currentExp={currentExp}
         onCurrentExpChange={onChangeCurrentExp}
       />
-      <MasteryCalculator lvl={currentLvl} maxMastery={maxMastery} spa={5.72} />
+      {items.map((i) => (
+        <MasteryCalculator
+          lvl={currentLvl}
+          maxMastery={maxMastery}
+          spa={i.spa}
+          name={i.name}
+        />
+      ))}
     </>
   );
 };
