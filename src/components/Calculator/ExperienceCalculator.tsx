@@ -6,7 +6,8 @@ import Calculations from "./Calculations";
 import CurrentInputField from "./CurrentInputField";
 import NumberInputField from "components/NumberInputField";
 import Checkbox from "components/Checkbox";
-import { CalculatorContext, setXp } from "./Context";
+import { CalculatorContext } from "../../state/Calculator/Context";
+import { setXp } from "state/Calculator/actions";
 
 type Props = {
   currentExp: string;

@@ -7,7 +7,7 @@ import {
 import { getCommaNumbers } from "utils/getCommaNumbers";
 import { getTimeText } from "utils/getTime";
 import Row from "common/Row";
-import { CalculatorContext } from "./Context";
+import { CalculatorContext } from "../../state/Calculator/Context";
 
 type Props = {
   targetLvl: string;

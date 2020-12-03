@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { CalculatorContext } from "./Context";
+import { CalculatorContext } from "../../state/Calculator/Context";
 import ExperienceCalculator from "./ExperienceCalculator";
 import MasteryCalculator from "./MasteryCalculator";
 

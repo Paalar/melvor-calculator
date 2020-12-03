@@ -7,7 +7,8 @@ import {
 } from "pages/Woodcutting/data";
 import NumberInputField from "components/NumberInputField";
 import { calculateMasteryXp, getCurrentLvlByXp } from "data/experienceTable";
-import { CalculatorContext, setPlayerMastery } from "./Context";
+import { CalculatorContext } from "../../state/Calculator/Context";
+import { setPlayerMastery } from "state/Calculator/actions";
 
 type Props = {
   maxMastery: number;

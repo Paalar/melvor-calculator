@@ -15,7 +15,7 @@ import {
   maxMastery,
   TreeName,
 } from "./data";
-import { CalculatorProvider } from "components/Calculator/Context";
+import { CalculatorProvider } from "state/Calculator/Context";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
