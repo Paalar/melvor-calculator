@@ -7,7 +7,7 @@ import {
 } from "pages/Woodcutting/data";
 import NumberInputField from "components/NumberInputField";
 import { calculateMasteryXp, getCurrentLvlByXp } from "data/experienceTable";
-import { CalculatorContext } from "./Context";
+import { CalculatorContext, setPlayerMastery } from "./Context";
 
 type Props = {
   maxMastery: number;
@@ -16,16 +16,16 @@ type Props = {
 };
 
 const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
-  const { calculatorState } = useContext(CalculatorContext);
+  const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
   const [currentMastery, setCurrentMastery] = useState<string>("1");
-  const [totalMastery, setTotalMastery] = useState<string>("1");
-  const onCurrentMasteryChange = (value: string) => setCurrentMastery(value);
-  const onTotalMasteryChange = (value: string) => setTotalMastery(value);
+
+  const onTotalMasteryChange = (value: string) =>
+    calculatorDispatch(setPlayerMastery(value));
   const masteryXpPerAction = calculateMasteryXp(
     getNumberOfUnlockedByLvl(
       getCurrentLvlByXp(Number(calculatorState.currentExp))
     ),
-    Number(totalMastery),
+    Number(calculatorState.playerMastery),
     maxMastery,
     Number(currentMastery),
     getNumberOfUnlockables(),
@@ -46,7 +46,7 @@ const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
           <p>Current item's mastery lvl</p>
           <NumberInputField
             value={currentMastery}
-            onValueChange={onCurrentMasteryChange}
+            onValueChange={(value) => setCurrentMastery(value)}
             min={1}
             max={99}
           />
@@ -54,7 +54,7 @@ const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
         <Row>
           <p>Current skill's total mastery lvl</p>
           <NumberInputField
-            value={totalMastery}
+            value={calculatorState.playerMastery}
             onValueChange={onTotalMasteryChange}
             min={1}
             max={maxMastery}

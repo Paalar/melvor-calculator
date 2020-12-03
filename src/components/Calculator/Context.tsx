@@ -1,14 +1,20 @@
-import experienceTable, { getCurrentLvlByXp } from "data/experienceTable";
+import experienceTable from "data/experienceTable";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 
 enum ActionTypes {
   SET_XP = "SET_XP",
+  SET_PLAYER_MASTERY = "SET_PLAYER_MASTERY",
 }
 type State = {
   currentExp: string;
+  playerMastery: string;
 };
 type SetXPAction = { type: ActionTypes.SET_XP; payload: string };
-type Action = SetXPAction;
+type SetPlayerMasteryAction = {
+  type: ActionTypes.SET_PLAYER_MASTERY;
+  payload: string;
+};
+type Action = SetXPAction | SetPlayerMasteryAction;
 type CalculatorContextProps = {
   calculatorState: State;
   calculatorDispatch: Dispatch<Action>;
@@ -19,6 +25,7 @@ type CalculatorProviderProps = {
 
 const initialState: State = {
   currentExp: "0",
+  playerMastery: "1",
 };
 
 const CalculatorReducer = (state: State, action: Action): State => {
@@ -30,6 +37,8 @@ const CalculatorReducer = (state: State, action: Action): State => {
         return { ...state, currentExp: experienceTable[98].toString() };
       return { ...state, currentExp: payload };
     }
+    case ActionTypes.SET_PLAYER_MASTERY:
+      return { ...state, playerMastery: action.payload };
     default:
       return { ...state };
   }
@@ -62,4 +71,8 @@ export const CalculatorProvider = (
 export const setXp = (xp: string): SetXPAction => ({
   type: ActionTypes.SET_XP,
   payload: xp,
+});
+export const setPlayerMastery = (mastery: string): SetPlayerMasteryAction => ({
+  type: ActionTypes.SET_PLAYER_MASTERY,
+  payload: mastery,
 });

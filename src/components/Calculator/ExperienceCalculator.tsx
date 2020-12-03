@@ -44,12 +44,7 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentExp }) => {
           min={2}
         />
       </Row>
-      <Calculations
-        currentExp={currentExp}
-        targetLvl={targetLvl}
-        xpa={xpa}
-        xps={xps}
-      />
+      <Calculations targetLvl={targetLvl} xpa={xpa} xps={xps} />
     </CalculatorCard>
   );
 };
