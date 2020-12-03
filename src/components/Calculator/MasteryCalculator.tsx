@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import {
@@ -12,13 +12,20 @@ import { setPlayerMastery } from "state/Calculator/actions";
 
 type Props = {
   maxMastery: number;
+  itemMastery: string;
   spa: number;
   name: string;
+  setItemMastery: (mastery: string) => void;
 };
 
-const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
+const MasteryCalculator: FC<Props> = ({
+  maxMastery,
+  itemMastery,
+  spa,
+  name,
+  setItemMastery,
+}) => {
   const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
-  const [currentMastery, setCurrentMastery] = useState<string>("1");
 
   const onTotalMasteryChange = (value: string) =>
     calculatorDispatch(setPlayerMastery(value));
@@ -28,7 +35,7 @@ const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
     ),
     Number(calculatorState.playerMastery),
     maxMastery,
-    Number(currentMastery),
+    Number(itemMastery),
     getNumberOfUnlockables(),
     spa
   );
@@ -46,8 +53,8 @@ const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
         <Row>
           <p>Current item's mastery lvl</p>
           <NumberInputField
-            value={currentMastery}
-            onValueChange={(value) => setCurrentMastery(value)}
+            value={itemMastery}
+            onValueChange={(value) => setItemMastery(value)}
             min={1}
             max={99}
           />

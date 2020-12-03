@@ -1,5 +1,5 @@
 import QualityPicker from "components/QualityPicker";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Option } from "react-dropdown";
 import Row from "common/Row";
 import TreeTypePicker from "./TreeTypePicker";
@@ -15,9 +15,11 @@ import {
   maxMastery,
   TreeName,
 } from "./data";
-import { CalculatorProvider } from "state/Calculator/Context";
+import { CalculatorContext } from "state/Calculator/Context";
 
 const Woodcutting: React.FC = () => {
+  const { calculatorState } = useContext(CalculatorContext);
+  const { itemMastery } = calculatorState;
   const [multitree, setMultitree] = useState<boolean>(false);
   const [skillCape, setSkillcape] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
@@ -37,15 +39,20 @@ const Woodcutting: React.FC = () => {
   };
 
   useEffect(() => {
-    const secPerTree1 =
-      getSecondsPerTree(trees[0], timeReduction) * (skillCape ? 0.5 : 1);
-    const secPerTree2 =
-      getSecondsPerTree(trees[1], timeReduction) * (skillCape ? 0.5 : 1);
+    const calculateSeconds = (index: number) =>
+      getSecondsPerTree(
+        trees[index],
+        timeReduction,
+        skillCape,
+        Number(itemMastery[index])
+      );
+    const secPerTree1 = calculateSeconds(0);
+    const secPerTree2 = calculateSeconds(1);
     const xps1 = getXpsPerTree(trees[0], secPerTree1);
     const xps2 = trees[1] ? getXpsPerTree(trees[1], secPerTree2) : 0;
     setXps([xps1, xps2]);
     setSpa([secPerTree1, secPerTree2]);
-  }, [trees, timeReduction, skillCape]);
+  }, [trees, timeReduction, skillCape, itemMastery]);
 
   return (
     <>
@@ -90,16 +97,14 @@ const Woodcutting: React.FC = () => {
           )}
         </Card>
       </LocalExtras>
-      <CalculatorProvider>
-        <Calculator
-          xps={_.sum(xps)}
-          maxMastery={maxMastery}
-          items={trees.map((value, index) => ({
-            name: value,
-            spa: spa[index],
-          }))}
-        />
-      </CalculatorProvider>
+      <Calculator
+        xps={_.sum(xps)}
+        maxMastery={maxMastery}
+        items={trees.map((value, index) => ({
+          name: value,
+          spa: spa[index],
+        }))}
+      />
     </>
   );
 };

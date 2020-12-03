@@ -46,8 +46,21 @@ export const getNumberOfUnlockedByLvl = (lvl: number) =>
     return prev;
   }, 0);
 
-export const getSecondsPerTree = (treeName: TreeName, timeReduction: number) =>
-  cutTimePerTreeType[treeName] * timeReduction;
+export const getSecondsPerTree = (
+  treeName: TreeName,
+  timeReduction: number,
+  skillCape: boolean,
+  masteryLvl: number
+): number => {
+  let seconds = cutTimePerTreeType[treeName] * timeReduction;
+  if (skillCape) {
+    seconds *= 0.5;
+  }
+  if (masteryLvl === 99) {
+    seconds -= 0.2;
+  }
+  return seconds;
+};
 export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>
   xpPerTreeType[treeName] / secPerTree;
 

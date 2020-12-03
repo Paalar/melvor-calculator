@@ -6,6 +6,7 @@ import Woodcutting from "pages/Woodcutting";
 import Page from "./Page";
 import "./App.css";
 import { Card } from "common/Card";
+import { CalculatorProvider } from "state/Calculator/Context";
 
 const PageDivider = styled.div`
   display: grid;
@@ -18,7 +19,11 @@ const PageDivider = styled.div`
 const pageSelector = (pageName: SkillNamesType) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
-      return <Woodcutting />;
+      return (
+        <CalculatorProvider>
+          <Woodcutting />
+        </CalculatorProvider>
+      );
     default:
       return (
         <Card>

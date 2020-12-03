@@ -10,15 +10,14 @@ import { CalculatorContext } from "../../state/Calculator/Context";
 import { setXp } from "state/Calculator/actions";
 
 type Props = {
-  currentExp: string;
   xpa?: number;
   xps: number;
 };
 
 const CalculatorCard = styled(Card)``;
 
-const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentExp }) => {
-  const { calculatorDispatch } = useContext(CalculatorContext);
+const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
+  const { calculatorDispatch, calculatorState } = useContext(CalculatorContext);
   const [targetLvl, setTargetLvl] = useState<string>("99");
   const [useLvls, setUseLvls] = useState<boolean>(false);
 
@@ -33,7 +32,7 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps, currentExp }) => {
       </Row>
       <CurrentInputField
         useLvls={useLvls}
-        currentExp={currentExp}
+        currentExp={calculatorState.currentExp}
         onCurrentExpChange={(value) => calculatorDispatch(setXp(value))}
       />
       <Row>
