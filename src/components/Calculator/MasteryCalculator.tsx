@@ -11,7 +11,9 @@ import {
   getNumberOfUnlockables,
   Unlockables,
 } from "data/experienceTable";
-import { unlockables } from "pages/Woodcutting/data";
+import usePrevious from "hooks/usePrevious";
+import { Extra, extraMasteryPool5, removeExtra } from "data/extras";
+import funcByOperator from "utils/funcByOperator";
 
 type Props = {
   maxMastery: number;
@@ -30,9 +32,11 @@ const MasteryCalculator: FC<Props> = ({
   maxMasteryPool,
   unlockables,
 }) => {
+  const [xpExtras, setXpExtras] = useState<Extra[]>([]);
   const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
-  const { currentExp, playerMastery } = calculatorState;
-  const masteryXpPerAction = calculateMasteryXp(
+  const { currentExp, playerMastery, masteryPool } = calculatorState;
+  const prevMasteryPool = usePrevious(masteryPool);
+  let mxpa = calculateMasteryXp(
     getNumberOfUnlockedByLvl(
       getCurrentLvlByXp(Number(currentExp)),
       unlockables
@@ -43,6 +47,22 @@ const MasteryCalculator: FC<Props> = ({
     getNumberOfUnlockables(unlockables),
     item.spa
   );
+
+  xpExtras.forEach(
+    (extra) => (mxpa = funcByOperator[extra.operator](mxpa, extra.value))
+  );
+
+  useEffect(() => {
+    if (prevMasteryPool !== masteryPool) {
+      if (
+        Number(masteryPool) >= maxMasteryPool * 0.05 &&
+        !xpExtras.includes(extraMasteryPool5)
+      )
+        setXpExtras([...xpExtras, extraMasteryPool5]);
+      if (Number(masteryPool) < maxMasteryPool * 0.05)
+        setXpExtras(removeExtra(xpExtras, extraMasteryPool5));
+    }
+  }, [masteryPool, prevMasteryPool, xpExtras, maxMasteryPool]);
   return (
     <>
       <Card>
@@ -76,11 +96,11 @@ const MasteryCalculator: FC<Props> = ({
         </Row>
         <Row>
           <p>{item.name} Mastery XP per action</p>
-          <p>{masteryXpPerAction.toFixed(2)}</p>
+          <p>{mxpa.toFixed(2)}</p>
         </Row>
         <Row>
           <p>Skill mastery pool XP per action</p>
-          <p>{(masteryXpPerAction / 4).toFixed(2)}</p>
+          <p>{(mxpa / 4).toFixed(2)}</p>
         </Row>
       </Card>
     </>
