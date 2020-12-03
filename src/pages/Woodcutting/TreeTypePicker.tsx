@@ -1,5 +1,4 @@
 import ReactDropdown, { Option } from "react-dropdown";
-import styled from "styled-components";
 import { TreeName, xpPerTreeType } from "./data";
 
 interface TreePickerProps {

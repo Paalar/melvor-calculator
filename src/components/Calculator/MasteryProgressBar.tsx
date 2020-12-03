@@ -16,31 +16,31 @@ import { CalculatorContext } from "state/Calculator/Context";
 import { getTimeText } from "utils/getTime";
 
 type Props = {
-  numberOfUnlocks: number;
   spa: number[];
   itemMasteries: string[];
   maxMastery: number;
   unlockables: Unlockables;
+  maxMasteryPool: number;
 };
 
-const calculateCompletion = (masteryExp: string, numberOfUnlocks: number) =>
-  (Number(masteryExp) / (numberOfUnlocks * 500000)) * 100;
-const calculateExpToMax = (masteryExp: string, unlockables: Unlockables) =>
-  getNumberOfUnlockables(unlockables) * 500000 - Number(masteryExp);
+const calculateCompletion = (masteryExp: string, maxMasteryPool: number) =>
+  (Number(masteryExp) / maxMasteryPool) * 100;
+const calculateExpToMax = (masteryExp: string, maxMasteryPool: number) =>
+  maxMasteryPool - Number(masteryExp);
 
 const MasteryProgressBar: FC<Props> = ({
-  numberOfUnlocks,
   maxMastery,
   itemMasteries,
   spa,
   unlockables,
+  maxMasteryPool,
 }) => {
   const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
-  const { currentExp, currentMasteryExp, playerMastery } = calculatorState;
+  const { currentExp, masteryPool, playerMastery } = calculatorState;
   const onMasteryXpChange = (value: string) =>
     calculatorDispatch(setMasteryXp(value));
-  const completion = calculateCompletion(currentMasteryExp, numberOfUnlocks);
-  const expToTarget = calculateExpToMax(currentMasteryExp, unlockables);
+  const completion = calculateCompletion(masteryPool, maxMasteryPool);
+  const expToTarget = calculateExpToMax(masteryPool, maxMasteryPool);
 
   const masteryXpPerAction = spa.reduce(
     (prev, current, index) =>
@@ -67,10 +67,10 @@ const MasteryProgressBar: FC<Props> = ({
       <Row>
         <p>Mastery pool XP</p>
         <NumberInputField
-          value={calculatorState.currentMasteryExp}
+          value={calculatorState.masteryPool}
           onValueChange={onMasteryXpChange}
           min={0}
-          max={getNumberOfUnlockables(unlockables) * 500000}
+          max={maxMasteryPool}
         />
       </Row>
       <Container width={completion}>

@@ -27,21 +27,24 @@ const Calculator: FC<Props> = ({
     newMastery[index] = mastery;
     calculatorDispatch(setItemMastery(newMastery));
   };
+  const maxMasteryPool = getNumberOfUnlockables(unlockables) * 5000000;
   return (
     <>
       <ExperienceCalculator xpa={xpa} xps={xps} />
       {items.length ? (
         <MasteryProgressBar
-          numberOfUnlocks={getNumberOfUnlockables(unlockables)}
           spa={items.map((item) => item.spa)}
           itemMasteries={calculatorState.itemMastery}
           maxMastery={maxMastery}
           unlockables={unlockables}
+          maxMasteryPool={maxMasteryPool}
         />
       ) : null}
       {items.map((item, index) => (
         <MasteryCalculator
           key={item.name}
+          maxMasteryPool={maxMasteryPool}
+          unlockables={unlockables}
           maxMastery={maxMastery}
           item={item}
           setItemMastery={(mastery) => setMastery(index, mastery)}

@@ -10,6 +10,8 @@ import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
 import {
   axeCutTimes,
+  extraMasteryOfNature,
+  extraSkillCape,
   getSecondsPerTree,
   getXpsPerTree,
   maxMastery,
@@ -17,14 +19,13 @@ import {
   unlockables,
 } from "./data";
 import { CalculatorContext } from "state/Calculator/Context";
+import { Extra, removeExtra } from "data/extras";
 
 const Woodcutting: React.FC = () => {
   const { calculatorState } = useContext(CalculatorContext);
   const { itemMastery } = calculatorState;
-
+  const [speedExtras, setSpeedExtras] = useState<Extra[]>([]);
   const [multitree, setMultitree] = useState<boolean>(false);
-  const [skillCape, setSkillcape] = useState<boolean>(false);
-  const [master, setMaster] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
   const [trees, setTrees] = useState<TreeName[]>([]);
   const [xps, setXps] = useState<number[]>([]);
@@ -41,14 +42,18 @@ const Woodcutting: React.FC = () => {
     if (trees.length > 1) trees.pop();
   };
 
+  const onCheckedExtra = (extra: Extra) => (checked: boolean) => {
+    if (checked) setSpeedExtras([...speedExtras, extra]);
+    else setSpeedExtras(removeExtra(speedExtras, extra));
+  };
+
   useEffect(() => {
     const calculateSeconds = (index: number) =>
       getSecondsPerTree(
         trees[index],
         timeReduction,
-        skillCape,
-        master,
-        Number(itemMastery[index])
+        itemMastery[index],
+        speedExtras
       );
     const secPerTree1 = calculateSeconds(0);
     const secPerTree2 = calculateSeconds(1);
@@ -56,7 +61,7 @@ const Woodcutting: React.FC = () => {
     const xps2 = trees[1] ? getXpsPerTree(trees[1], secPerTree2) : 0;
     setXps([xps1, xps2]);
     setSpa([secPerTree1, secPerTree2]);
-  }, [trees, timeReduction, skillCape, itemMastery, master]);
+  }, [trees, timeReduction, speedExtras, itemMastery]);
 
   return (
     <>
@@ -69,13 +74,13 @@ const Woodcutting: React.FC = () => {
           <Row>
             <Checkbox
               label="Woodcutting skillcape"
-              onChecked={(checked) => setSkillcape(checked)}
+              onChecked={onCheckedExtra(extraSkillCape)}
             />
           </Row>
           <Row>
             <Checkbox
               label="Master of Nature"
-              onChecked={(checked) => setMaster(checked)}
+              onChecked={onCheckedExtra(extraMasteryOfNature)}
             />
           </Row>
           <Row>

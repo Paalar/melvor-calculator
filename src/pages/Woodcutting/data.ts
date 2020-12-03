@@ -1,4 +1,6 @@
 import { Unlockables } from "data/experienceTable";
+import { Extra } from "data/extras";
+import funcByOperator from "utils/funcByOperator";
 
 export const xpPerTreeType = {
   Normal: 10,
@@ -36,25 +38,31 @@ export const unlockables: Unlockables = {
   90: 1,
 };
 
+export const extraSkillCape: Extra = {
+  name: "skillCape",
+  operator: "*",
+  value: 0.5,
+};
+
+export const extraMasteryOfNature: Extra = {
+  name: "masterOfNature",
+  operator: "*",
+  value: 0.8,
+};
+
 export const maxMastery = 891;
 export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
 export const getSecondsPerTree = (
   treeName: TreeName,
   timeReduction: number,
-  skillCape: boolean,
-  masterOfNature: boolean,
-  masteryLvl: number
+  itemMastery: string,
+  extras: Extra[]
 ): number => {
   let seconds = cutTimePerTreeType[treeName] * timeReduction;
-  if (skillCape) {
-    seconds *= 0.5;
-  }
-  if (masteryLvl === 99) {
-    seconds -= 0.2;
-  }
-  if (masterOfNature) {
-    seconds *= 0.8;
-  }
+  if (itemMastery === "99") seconds -= 0.2;
+  extras.forEach(
+    (extra) => (seconds = funcByOperator[extra.operator](seconds, extra.value))
+  );
   return seconds;
 };
 export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>

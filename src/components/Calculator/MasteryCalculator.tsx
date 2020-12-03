@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import NumberInputField from "components/NumberInputField";
@@ -9,6 +9,7 @@ import {
   getNumberOfUnlockedByLvl,
   getCurrentLvlByXp,
   getNumberOfUnlockables,
+  Unlockables,
 } from "data/experienceTable";
 import { unlockables } from "pages/Woodcutting/data";
 
@@ -17,6 +18,8 @@ type Props = {
   itemMastery: string;
   item: { name: string; spa: number };
   setItemMastery: (mastery: string) => void;
+  maxMasteryPool: number;
+  unlockables: Unlockables;
 };
 
 const MasteryCalculator: FC<Props> = ({
@@ -24,6 +27,8 @@ const MasteryCalculator: FC<Props> = ({
   itemMastery,
   item,
   setItemMastery,
+  maxMasteryPool,
+  unlockables,
 }) => {
   const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
   const { currentExp, playerMastery } = calculatorState;
