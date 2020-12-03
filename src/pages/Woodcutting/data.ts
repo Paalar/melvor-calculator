@@ -1,3 +1,5 @@
+import { Unlockables } from "data/experienceTable";
+
 export const xpPerTreeType = {
   Normal: 10,
   Oak: 15,
@@ -22,7 +24,7 @@ export const cutTimePerTreeType: Record<TreeName, number> = {
   Redwood: 15,
 };
 
-const unlockables: Record<number, number> = {
+export const unlockables: Unlockables = {
   10: 1,
   25: 1,
   35: 1,
@@ -36,16 +38,6 @@ const unlockables: Record<number, number> = {
 
 export const maxMastery = 891;
 export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
-
-export const getNumberOfUnlockables = (): number =>
-  Object.values(unlockables).reduce((prev, current) => prev + current, 0);
-export const getNumberOfUnlockedByLvl = (lvl: number) =>
-  Object.entries(unlockables).reduce((prev, current) => {
-    const unlockAtLvl = Number(current[0]);
-    if (unlockAtLvl <= lvl) return prev + current[1];
-    return prev;
-  }, 0);
-
 export const getSecondsPerTree = (
   treeName: TreeName,
   timeReduction: number,

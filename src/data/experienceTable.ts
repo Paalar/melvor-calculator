@@ -1,3 +1,5 @@
+export type Unlockables = Record<number, number>;
+
 export const experienceTable: number[] = [
   0,
   83,
@@ -99,6 +101,18 @@ export const experienceTable: number[] = [
   11805606,
   13034431,
 ];
+
+export const getNumberOfUnlockables = (unlockables: Unlockables): number =>
+  Object.values(unlockables).reduce((prev, current) => prev + current, 0);
+export const getNumberOfUnlockedByLvl = (
+  lvl: number,
+  unlockables: Unlockables
+) =>
+  Object.entries(unlockables).reduce((prev, current) => {
+    const unlockAtLvl = Number(current[0]);
+    if (unlockAtLvl <= lvl) return prev + current[1];
+    return prev;
+  }, 0);
 
 export const getCurrentLvlByXp = (xp: number): number => {
   for (let i = 0; i < experienceTable.length; i++) {

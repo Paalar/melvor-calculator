@@ -14,6 +14,7 @@ import {
   getXpsPerTree,
   maxMastery,
   TreeName,
+  unlockables,
 } from "./data";
 import { CalculatorContext } from "state/Calculator/Context";
 
@@ -113,6 +114,7 @@ const Woodcutting: React.FC = () => {
           name: value,
           spa: spa[index],
         }))}
+        unlockables={unlockables}
       />
     </>
   );

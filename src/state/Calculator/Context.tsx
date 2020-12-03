@@ -4,6 +4,7 @@ import { CalculatorAction, CalculatorActionTypes } from "./actions";
 
 type State = {
   currentExp: string;
+  currentMasteryExp: string;
   playerMastery: string;
   itemMastery: string[];
 };
@@ -18,6 +19,7 @@ type CalculatorProviderProps = {
 
 const initialState: State = {
   currentExp: "0",
+  currentMasteryExp: "0",
   playerMastery: "1",
   itemMastery: ["1", "1"], // The second element is used for woodcutting with multiple axes
 };
@@ -35,6 +37,8 @@ const CalculatorReducer = (state: State, action: CalculatorAction): State => {
       return { ...state, playerMastery: action.payload };
     case CalculatorActionTypes.SET_ITEM_MASTERY:
       return { ...state, itemMastery: [...action.payload] };
+    case CalculatorActionTypes.SET_MASTERY_XP:
+      return { ...state, currentMasteryExp: action.payload };
     default:
       return { ...state };
   }

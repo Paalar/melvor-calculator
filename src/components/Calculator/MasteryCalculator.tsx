@@ -1,48 +1,47 @@
 import React, { FC, useContext } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
-import {
-  getNumberOfUnlockables,
-  getNumberOfUnlockedByLvl,
-} from "pages/Woodcutting/data";
 import NumberInputField from "components/NumberInputField";
-import { calculateMasteryXp, getCurrentLvlByXp } from "data/experienceTable";
 import { CalculatorContext } from "../../state/Calculator/Context";
 import { setPlayerMastery } from "state/Calculator/actions";
+import {
+  calculateMasteryXp,
+  getNumberOfUnlockedByLvl,
+  getCurrentLvlByXp,
+  getNumberOfUnlockables,
+} from "data/experienceTable";
+import { unlockables } from "pages/Woodcutting/data";
 
 type Props = {
   maxMastery: number;
   itemMastery: string;
-  spa: number;
-  name: string;
+  item: { name: string; spa: number };
   setItemMastery: (mastery: string) => void;
 };
 
 const MasteryCalculator: FC<Props> = ({
   maxMastery,
   itemMastery,
-  spa,
-  name,
+  item,
   setItemMastery,
 }) => {
   const { calculatorState, calculatorDispatch } = useContext(CalculatorContext);
-
-  const onTotalMasteryChange = (value: string) =>
-    calculatorDispatch(setPlayerMastery(value));
+  const { currentExp, playerMastery } = calculatorState;
   const masteryXpPerAction = calculateMasteryXp(
     getNumberOfUnlockedByLvl(
-      getCurrentLvlByXp(Number(calculatorState.currentExp))
+      getCurrentLvlByXp(Number(currentExp)),
+      unlockables
     ),
-    Number(calculatorState.playerMastery),
+    Number(playerMastery),
     maxMastery,
     Number(itemMastery),
-    getNumberOfUnlockables(),
-    spa
+    getNumberOfUnlockables(unlockables),
+    item.spa
   );
   return (
     <>
       <Card>
-        <h2>Mastery Calculator - {name}</h2>
+        <h2>Mastery Calculator - {item.name}</h2>
         <Row>
           <p>
             The mastery calculator is dependent on the skill's current lvl. You
@@ -63,17 +62,19 @@ const MasteryCalculator: FC<Props> = ({
           <p>Current skill's total mastery lvl</p>
           <NumberInputField
             value={calculatorState.playerMastery}
-            onValueChange={onTotalMasteryChange}
+            onValueChange={(value) =>
+              calculatorDispatch(setPlayerMastery(value))
+            }
             min={1}
             max={maxMastery}
           />
         </Row>
         <Row>
-          <p>Mastery XP per action</p>
+          <p>{item.name} Mastery XP per action</p>
           <p>{masteryXpPerAction.toFixed(2)}</p>
         </Row>
         <Row>
-          <p>Skill's mastery XP per action</p>
+          <p>Skill mastery pool XP per action</p>
           <p>{(masteryXpPerAction / 4).toFixed(2)}</p>
         </Row>
       </Card>
