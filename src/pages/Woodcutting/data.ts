@@ -25,6 +25,7 @@ export const cutTimePerTreeType: Record<TreeName, number> = {
 };
 
 export const unlockables: Unlockables = {
+  0: 1,
   10: 1,
   25: 1,
   35: 1,
@@ -33,7 +34,6 @@ export const unlockables: Unlockables = {
   60: 1,
   75: 1,
   90: 1,
-  99: 1,
 };
 
 export const maxMastery = 891;
