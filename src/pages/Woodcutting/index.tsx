@@ -20,8 +20,10 @@ import { CalculatorContext } from "state/Calculator/Context";
 const Woodcutting: React.FC = () => {
   const { calculatorState } = useContext(CalculatorContext);
   const { itemMastery } = calculatorState;
+
   const [multitree, setMultitree] = useState<boolean>(false);
   const [skillCape, setSkillcape] = useState<boolean>(false);
+  const [master, setMaster] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
   const [trees, setTrees] = useState<TreeName[]>([]);
   const [xps, setXps] = useState<number[]>([]);
@@ -44,6 +46,7 @@ const Woodcutting: React.FC = () => {
         trees[index],
         timeReduction,
         skillCape,
+        master,
         Number(itemMastery[index])
       );
     const secPerTree1 = calculateSeconds(0);
@@ -52,7 +55,7 @@ const Woodcutting: React.FC = () => {
     const xps2 = trees[1] ? getXpsPerTree(trees[1], secPerTree2) : 0;
     setXps([xps1, xps2]);
     setSpa([secPerTree1, secPerTree2]);
-  }, [trees, timeReduction, skillCape, itemMastery]);
+  }, [trees, timeReduction, skillCape, itemMastery, master]);
 
   return (
     <>
@@ -66,6 +69,12 @@ const Woodcutting: React.FC = () => {
             <Checkbox
               label="Woodcutting skillcape"
               onChecked={(checked) => setSkillcape(checked)}
+            />
+          </Row>
+          <Row>
+            <Checkbox
+              label="Master of Nature"
+              onChecked={(checked) => setMaster(checked)}
             />
           </Row>
           <Row>

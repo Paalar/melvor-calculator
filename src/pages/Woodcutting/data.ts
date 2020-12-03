@@ -50,6 +50,7 @@ export const getSecondsPerTree = (
   treeName: TreeName,
   timeReduction: number,
   skillCape: boolean,
+  masterOfNature: boolean,
   masteryLvl: number
 ): number => {
   let seconds = cutTimePerTreeType[treeName] * timeReduction;
@@ -58,6 +59,9 @@ export const getSecondsPerTree = (
   }
   if (masteryLvl === 99) {
     seconds -= 0.2;
+  }
+  if (masterOfNature) {
+    seconds *= 0.8;
   }
   return seconds;
 };
