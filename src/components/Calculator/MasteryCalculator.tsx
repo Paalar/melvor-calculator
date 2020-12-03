@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import {
@@ -6,22 +6,25 @@ import {
   getNumberOfUnlockedByLvl,
 } from "pages/Woodcutting/data";
 import NumberInputField from "components/NumberInputField";
-import { calculateMasteryXp } from "data/experienceTable";
+import { calculateMasteryXp, getCurrentLvlByXp } from "data/experienceTable";
+import { CalculatorContext } from "./Context";
 
 type Props = {
-  lvl: number;
   maxMastery: number;
   spa: number;
   name: string;
 };
 
-const MasteryCalculator: FC<Props> = ({ lvl, maxMastery, spa, name }) => {
+const MasteryCalculator: FC<Props> = ({ maxMastery, spa, name }) => {
+  const { calculatorState } = useContext(CalculatorContext);
   const [currentMastery, setCurrentMastery] = useState<string>("1");
   const [totalMastery, setTotalMastery] = useState<string>("1");
   const onCurrentMasteryChange = (value: string) => setCurrentMastery(value);
   const onTotalMasteryChange = (value: string) => setTotalMastery(value);
   const masteryXpPerAction = calculateMasteryXp(
-    getNumberOfUnlockedByLvl(lvl),
+    getNumberOfUnlockedByLvl(
+      getCurrentLvlByXp(Number(calculatorState.currentExp))
+    ),
     Number(totalMastery),
     maxMastery,
     Number(currentMastery),

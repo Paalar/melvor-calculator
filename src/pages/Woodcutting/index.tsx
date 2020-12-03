@@ -15,6 +15,7 @@ import {
   maxMastery,
   TreeName,
 } from "./data";
+import { CalculatorProvider } from "components/Calculator/Context";
 
 const Woodcutting: React.FC = () => {
   const [multitree, setMultitree] = useState<boolean>(false);
@@ -89,11 +90,16 @@ const Woodcutting: React.FC = () => {
           )}
         </Card>
       </LocalExtras>
-      <Calculator
-        xps={_.sum(xps)}
-        maxMastery={maxMastery}
-        items={trees.map((value, index) => ({ name: value, spa: spa[index] }))}
-      />
+      <CalculatorProvider>
+        <Calculator
+          xps={_.sum(xps)}
+          maxMastery={maxMastery}
+          items={trees.map((value, index) => ({
+            name: value,
+            spa: spa[index],
+          }))}
+        />
+      </CalculatorProvider>
     </>
   );
 };

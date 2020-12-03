@@ -1,5 +1,5 @@
-import experienceTable, { getCurrentLvlByXp } from "data/experienceTable";
-import { FC, useEffect, useState } from "react";
+import { FC, useContext } from "react";
+import { CalculatorContext } from "./Context";
 import ExperienceCalculator from "./ExperienceCalculator";
 import MasteryCalculator from "./MasteryCalculator";
 
@@ -11,33 +11,13 @@ type Props = {
 };
 
 const Calculator: FC<Props> = ({ xpa, xps, maxMastery, items }) => {
-  const [currentExp, setCurrentExp] = useState<string>("0");
-  const [currentLvl, setCurrentLvl] = useState<number>(Number(currentExp));
-  const onChangeCurrentExp = (value: string) => setCurrentExp(value);
-
-  useEffect(() => {
-    if (Number(currentExp) < 0) setCurrentExp("0");
-    if (Number(currentExp) > experienceTable[98])
-      setCurrentExp(experienceTable[98].toString());
-    if (currentExp.length && !Number.isNaN(Number(currentExp))) {
-      setCurrentLvl(getCurrentLvlByXp(Number(currentExp)));
-    }
-  }, [currentExp]);
+  const { calculatorState } = useContext(CalculatorContext);
+  const { currentExp } = calculatorState;
   return (
     <>
-      <ExperienceCalculator
-        xpa={xpa}
-        xps={xps}
-        currentExp={currentExp}
-        onCurrentExpChange={onChangeCurrentExp}
-      />
+      <ExperienceCalculator xpa={xpa} xps={xps} currentExp={currentExp} />
       {items.map((i) => (
-        <MasteryCalculator
-          lvl={currentLvl}
-          maxMastery={maxMastery}
-          spa={i.spa}
-          name={i.name}
-        />
+        <MasteryCalculator maxMastery={maxMastery} spa={i.spa} name={i.name} />
       ))}
     </>
   );
