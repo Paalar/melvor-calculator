@@ -1,6 +1,7 @@
-import { Unlockables } from "data/experienceTable";
 import { Extra } from "data/extras";
 import funcByOperator from "utils/funcByOperator";
+
+export type Unlockables = Record<number, number>;
 
 export const xpPerTreeType = {
   Normal: 10,

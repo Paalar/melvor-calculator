@@ -3,17 +3,17 @@ import styled from "styled-components";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import NumberInputField from "components/NumberInputField";
-import {
-  calculateMasteryXp,
-  calculateSecondsToTargetLvl,
-  getCurrentLvlByXp,
-  getNumberOfUnlockables,
-  getNumberOfUnlockedByLvl,
-  Unlockables,
-} from "data/experienceTable";
 import { setMasteryXp } from "state/Calculator/actions";
 import { CalculatorContext } from "state/Calculator/Context";
 import { getTimeText } from "utils/getTime";
+import { calculateSecondsToTargetLvl } from "calculations/common";
+import { getCurrentLvlByXp } from "calculations/experience";
+import {
+  calculateMasteryXp,
+  getNumberOfUnlockedByLvl,
+  getNumberOfUnlockables,
+} from "calculations/mastery";
+import { Unlockables } from "pages/Woodcutting/data";
 
 type Props = {
   spa: number[];

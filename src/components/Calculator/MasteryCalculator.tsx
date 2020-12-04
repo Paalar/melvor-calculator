@@ -4,16 +4,16 @@ import { Card } from "common/Card";
 import NumberInputField from "components/NumberInputField";
 import { CalculatorContext } from "state/Calculator/Context";
 import { setPlayerMastery } from "state/Calculator/actions";
-import {
-  calculateMasteryXp,
-  getNumberOfUnlockedByLvl,
-  getCurrentLvlByXp,
-  getNumberOfUnlockables,
-  Unlockables,
-} from "data/experienceTable";
 import usePrevious from "hooks/usePrevious";
 import { Extra, extraMasteryPool5, removeExtra } from "data/extras";
 import funcByOperator from "utils/funcByOperator";
+import { getCurrentLvlByXp } from "calculations/experience";
+import {
+  calculateMasteryXp,
+  getNumberOfUnlockedByLvl,
+  getNumberOfUnlockables,
+} from "calculations/mastery";
+import { Unlockables } from "pages/Woodcutting/data";
 
 type Props = {
   maxMastery: number;

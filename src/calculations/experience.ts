@@ -1,5 +1,3 @@
-export type Unlockables = Record<number, number>;
-
 export const experienceTable: number[] = [
   0,
   83,
@@ -102,18 +100,6 @@ export const experienceTable: number[] = [
   13034431,
 ];
 
-export const getNumberOfUnlockables = (unlockables: Unlockables): number =>
-  Object.values(unlockables).reduce((prev, current) => prev + current, 0);
-export const getNumberOfUnlockedByLvl = (
-  lvl: number,
-  unlockables: Unlockables
-) =>
-  Object.entries(unlockables).reduce((prev, current) => {
-    const unlockAtLvl = Number(current[0]);
-    if (unlockAtLvl <= lvl) return prev + current[1];
-    return prev;
-  }, 0);
-
 export const getCurrentLvlByXp = (xp: number): number => {
   for (let i = 0; i < experienceTable.length; i++) {
     if (xp === experienceTable[i]) return i + 1;
@@ -127,22 +113,8 @@ export const expTableToString = () =>
   experienceTable.map((row) => row.toString());
 export const expTableAsLvls = () =>
   experienceTable.map((row, index) => (index + 1).toString());
+
 export const experienceDifference = (currentExp: number, targetLvl: number) =>
   experienceTable[targetLvl] - currentExp;
-export const calculateNumberOfActions = (xpDiff: number, xpa: number) =>
-  Math.ceil(xpDiff / xpa);
-export const calculateSecondsToTargetLvl = (xpDiff: number, xps: number) =>
-  Math.ceil(xpDiff / xps);
-export const calculateMasteryXp = (
-  unlockedMilestones: number,
-  playerMastery: number,
-  totalMastery: number,
-  itemMastery: number,
-  totalMilestones: number,
-  secPerAction: number
-) =>
-  ((unlockedMilestones * playerMastery) / totalMastery +
-    itemMastery * (totalMilestones / 10)) *
-  secPerAction *
-  0.5;
+
 export default experienceTable;

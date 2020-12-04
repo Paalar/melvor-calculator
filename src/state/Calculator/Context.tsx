@@ -1,4 +1,4 @@
-import experienceTable from "data/experienceTable";
+import experienceTable from "calculations/experience";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import { CalculatorAction, CalculatorActionTypes } from "./actions";
 

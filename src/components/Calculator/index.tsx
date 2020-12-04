@@ -1,5 +1,6 @@
+import { getNumberOfUnlockables } from "calculations/mastery";
+import { Unlockables } from "pages/Woodcutting/data";
 import { FC, useContext } from "react";
-import { getNumberOfUnlockables, Unlockables } from "data/experienceTable";
 import { setItemMastery } from "state/Calculator/actions";
 import { CalculatorContext } from "state/Calculator/Context";
 import ExperienceCalculator from "./ExperienceCalculator";

@@ -1,13 +1,13 @@
 import { FC, useContext } from "react";
-import {
-  experienceDifference,
-  calculateNumberOfActions,
-  calculateSecondsToTargetLvl,
-} from "data/experienceTable";
 import { getCommaNumbers } from "utils/getCommaNumbers";
 import { getTimeText } from "utils/getTime";
 import Row from "common/Row";
 import { CalculatorContext } from "state/Calculator/Context";
+import {
+  calculateNumberOfActions,
+  calculateSecondsToTargetLvl,
+} from "calculations/common";
+import { experienceDifference } from "calculations/experience";
 
 type Props = {
   targetLvl: string;
