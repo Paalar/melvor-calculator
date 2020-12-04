@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 import Menu from "components/Menu";
 import { SkillNamesEnum, SkillNamesType } from "common/skillNames";
@@ -16,14 +16,14 @@ const PageDivider = styled.div`
   grid-template-columns: 1fr 3fr;
 `;
 
-const pageSelector = (pageName: SkillNamesType) => {
+type CurrentComponentProps = {
+  pageName: SkillNamesType;
+};
+
+const CurrentComponent: FC<CurrentComponentProps> = ({ pageName }) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
-      return (
-        <CalculatorProvider>
-          <Woodcutting />
-        </CalculatorProvider>
-      );
+      return <Woodcutting />;
     default:
       return (
         <Card>
@@ -37,11 +37,13 @@ function App() {
   const [currentPageName, setCurrentPageName] = useState<SkillNamesType>(
     "Woodcutting"
   );
-
-  const CurrentComponent = pageSelector(currentPageName);
   return (
     <PageDivider className="App">
-      <Page pageName={currentPageName}>{CurrentComponent}</Page>
+      <CalculatorProvider>
+        <Page pageName={currentPageName}>
+          <CurrentComponent pageName={currentPageName} />
+        </Page>
+      </CalculatorProvider>
       <Menu setPage={setCurrentPageName} />
     </PageDivider>
   );

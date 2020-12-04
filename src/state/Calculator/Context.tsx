@@ -39,6 +39,8 @@ const CalculatorReducer = (state: State, action: CalculatorAction): State => {
       return { ...state, itemMastery: [...action.payload] };
     case CalculatorActionTypes.SET_MASTERY_XP:
       return { ...state, masteryPool: action.payload };
+    case CalculatorActionTypes.RESET:
+      return { ...initialState };
     default:
       return { ...state };
   }
