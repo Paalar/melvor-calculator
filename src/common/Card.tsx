@@ -21,7 +21,7 @@ type DropdownCardProps = {
   children: ReactNode;
 };
 
-const DropdownCard: FC<DropdownCardProps> = ({ children, title }) => {
+export const DropdownCard: FC<DropdownCardProps> = ({ children, title }) => {
   const [showCard, setShowCard] = useState(false);
   return (
     <DropDownCardContainer>
@@ -56,4 +56,4 @@ const DropdownContent = styled.div`
   } ;
 `;
 
-export default DropdownCard;
+export default Card;
