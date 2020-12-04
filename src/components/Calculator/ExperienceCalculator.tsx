@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import Row from "common/Row";
 import styled from "styled-components";
 import { Card } from "common/Card";

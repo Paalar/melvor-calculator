@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import NumberInputField from "components/NumberInputField";

@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { SkillNamesType } from "common/skillNames";
 import Icon from "components/Icon";
+import { FC } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ interface Props {
   name: SkillNamesType;
 }
 
-const HeaderSvg: React.FC<Props> = ({ name }) => {
+const HeaderSvg: FC<Props> = ({ name }) => {
   return (
     <Wrapper>
       <WhiteBackground>
