@@ -1,5 +1,5 @@
 import { FC } from "react";
-import DropdownCard from "common/Card";
+import { DropdownCard } from "common/Card";
 import Row from "common/Row";
 import Checkbox from "components/Checkbox";
 
