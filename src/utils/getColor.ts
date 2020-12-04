@@ -1,4 +1,4 @@
-import { SkillNamesType } from "../common/skillNames";
+import { SkillNamesType } from "common/skillNames";
 
 const SkillColors = {
   Attack: "#a4a4a9",

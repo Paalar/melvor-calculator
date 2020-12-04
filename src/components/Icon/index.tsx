@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SkillNamesType } from "../../common/skillNames";
+import { SkillNamesType } from "common/skillNames";
 
 const Img = styled.img<{ size?: string }>`
   width: ${(props) => (props.size ? props.size : "32px")};

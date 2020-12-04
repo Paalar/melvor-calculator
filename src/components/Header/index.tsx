@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { SkillNamesType } from "../../common/skillNames";
-import { getColor } from "../../utils/getColor";
+import { SkillNamesType } from "common/skillNames";
+import { getColor } from "utils/getColor";
 import HeaderSvg from "./HeaderSvg";
 
 interface Props {

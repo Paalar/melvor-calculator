@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import Row from "common/Row";
 import { Card } from "common/Card";
 import NumberInputField from "components/NumberInputField";
-import { CalculatorContext } from "../../state/Calculator/Context";
+import { CalculatorContext } from "state/Calculator/Context";
 import { setPlayerMastery } from "state/Calculator/actions";
 import {
   calculateMasteryXp,

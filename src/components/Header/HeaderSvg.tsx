@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { SkillNamesType } from "../../common/skillNames";
-import Icon from "../Icon";
+import { SkillNamesType } from "common/skillNames";
+import Icon from "components/Icon";
 
 const Wrapper = styled.div`
   display: flex;
