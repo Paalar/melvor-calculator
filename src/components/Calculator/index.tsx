@@ -27,7 +27,7 @@ const Calculator: FC<Props> = ({
     newMastery[index] = mastery;
     calculatorDispatch(setItemMastery(newMastery));
   };
-  const maxMasteryPool = getNumberOfUnlockables(unlockables) * 5000000;
+  const maxMasteryPool = getNumberOfUnlockables(unlockables) * 500000;
   return (
     <>
       <ExperienceCalculator xpa={xpa} xps={xps} />
