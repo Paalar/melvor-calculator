@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Menu from "components/Menu";
 import { SkillNamesEnum, SkillNamesType } from "common/skillNames";
 import Woodcutting from "pages/Woodcutting";
+import Mining from "pages/Mining";
 import Page from "./Page";
 import "./App.css";
 import { Card } from "common/Card";
@@ -24,6 +25,8 @@ const CurrentComponent: FC<CurrentComponentProps> = ({ pageName }) => {
   switch (pageName) {
     case SkillNamesEnum[SkillNamesEnum.Woodcutting]:
       return <Woodcutting />;
+    case SkillNamesEnum[SkillNamesEnum.Mining]:
+      return <Mining />;
     default:
       return (
         <Card>
