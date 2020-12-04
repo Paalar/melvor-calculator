@@ -41,7 +41,7 @@ export const unlockables: Unlockables = {
 
 export const extraSkillCape: Extra = {
   name: "skillCape",
-  operator: '*',
+  operator: "*",
   value: 0.5,
 };
 
@@ -62,7 +62,7 @@ export const getSecondsPerTree = (
 ): number => {
   const secs = cutTimePerTreeType[treeName] * timeReduction;
   return getSecondsPerActionWithExtras(secs, Number(itemMastery), extras);
-}
+};
 
 export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>
   xpPerTreeType[treeName] / secPerTree;
