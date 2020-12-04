@@ -58,7 +58,9 @@ const MasteryProgressBar: FC<Props> = ({
     0
   );
   const xps = spa.reduce(
-    (prev, current) => masteryXpPerAction / 4 / current + prev,
+    (prev, current, index) =>
+      masteryXpPerAction / (itemMasteries[index] === "99" ? 2 : 4) / current +
+      prev,
     0
   );
   const secondsToTarget = calculateSecondsToTargetLvl(expToTarget, xps);

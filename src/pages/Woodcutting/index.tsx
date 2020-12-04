@@ -1,5 +1,5 @@
 import QualityPicker from "components/QualityPicker";
-import { useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Option } from "react-dropdown";
 import Row from "common/Row";
 import TreeTypePicker from "./TreeTypePicker";
@@ -21,24 +21,24 @@ import {
 import { CalculatorContext } from "state/Calculator/Context";
 import { Extra, removeExtra } from "data/extras";
 
-const Woodcutting: React.FC = () => {
+const Woodcutting: FC = () => {
   const { calculatorState } = useContext(CalculatorContext);
-  const { itemMastery } = calculatorState;
+  const { itemMastery, secondsToTarget } = calculatorState;
   const [speedExtras, setSpeedExtras] = useState<Extra[]>([]);
-  const [multitree, setMultitree] = useState<boolean>(false);
+  const [multiTree, setMultiTree] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
   const [trees, setTrees] = useState<TreeName[]>([]);
   const [xps, setXps] = useState<number[]>([]);
   const [spa, setSpa] = useState<number[]>([]);
 
   const setTree = (treeIndex: number, option: Option) => {
-    const oldXpa = [...trees];
-    oldXpa[treeIndex] = option.value as TreeName;
-    setTrees(oldXpa);
+    const oldTrees = [...trees];
+    oldTrees[treeIndex] = option.value as TreeName;
+    setTrees(oldTrees);
   };
 
   const onCheck = () => {
-    setMultitree(!multitree);
+    setMultiTree(!multiTree);
     if (trees.length > 1) trees.pop();
   };
 
@@ -101,7 +101,7 @@ const Woodcutting: React.FC = () => {
               excludeTree={trees[1]}
             />
           </Row>
-          {multitree && (
+          {multiTree && (
             <Row>
               <p>Tree 2</p>
               <TreeTypePicker
@@ -120,10 +120,45 @@ const Woodcutting: React.FC = () => {
           spa: spa[index],
         }))}
         unlockables={unlockables}
-      />
+      >
+        <AcquiredLogs
+          trees={trees}
+          spa={spa}
+          secondsToTarget={secondsToTarget}
+          multiTree={multiTree}
+        />
+      </Calculator>
     </>
   );
 };
+
+type AcquiredLogsProps = {
+  trees: TreeName[];
+  spa: number[];
+  secondsToTarget: number;
+  multiTree: boolean;
+};
+
+const AcquiredLogs: FC<AcquiredLogsProps> = ({
+  trees,
+  spa,
+  secondsToTarget,
+  multiTree,
+}) =>
+  Number.isNaN(secondsToTarget) ? null : (
+    <Row>
+      <p>
+        {trees[0]} logs cut when target reached:{" "}
+        {Math.ceil(secondsToTarget / spa[0])}
+      </p>
+      {multiTree ? (
+        <p>
+          {trees[1]} logs cut when target reached:{" "}
+          {Math.ceil(secondsToTarget / spa[1])}
+        </p>
+      ) : null}
+    </Row>
+  );
 
 const LocalExtras = styled.div`
   display: grid;
