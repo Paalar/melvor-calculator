@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 export type Extra = {
   name: string;
   operator: string;
@@ -13,4 +11,4 @@ export const extraMasteryPool5: Extra = {
 };
 
 export const removeExtra = (extras: Extra[], extra: Extra) =>
-  _.filter(extras, (other) => other.name !== extra.name);
+  extras.filter((other) => other.name !== extra.name);
