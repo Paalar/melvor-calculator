@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import NumberInputField from "components/NumberInputField";
 import Row from "common/Row";
-import experienceTable from "data/experienceTable";
+import experienceTable from "calculations/experience";
 
 type Props = {
   useLvls: boolean;

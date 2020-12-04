@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
 
 type Props = {
-  value: number | string;
   onValueChange: (value: string) => void;
+  value: number | string;
   label?: string;
   max?: number;
   min?: number;

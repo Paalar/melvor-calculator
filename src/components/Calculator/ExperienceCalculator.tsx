@@ -1,61 +1,50 @@
-import React, { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import Row from "common/Row";
 import styled from "styled-components";
 import { Card } from "common/Card";
 import Calculations from "./Calculations";
 import CurrentInputField from "./CurrentInputField";
 import NumberInputField from "components/NumberInputField";
+import Checkbox from "components/Checkbox";
+import { CalculatorContext } from "state/Calculator/Context";
+import { setXp } from "state/Calculator/actions";
 
 type Props = {
-  currentExp: string;
-  onCurrentExpChange: (exp: string) => void;
   xpa?: number;
   xps: number;
 };
 
 const CalculatorCard = styled(Card)``;
 
-const ExperienceCalculator: FC<Props> = ({
-  xpa,
-  xps,
-  currentExp,
-  onCurrentExpChange,
-}) => {
+const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
+  const { calculatorDispatch, calculatorState } = useContext(CalculatorContext);
   const [targetLvl, setTargetLvl] = useState<string>("99");
   const [useLvls, setUseLvls] = useState<boolean>(false);
-  const onChangeTargetLvl = (value: string) => setTargetLvl(value);
 
   return (
     <CalculatorCard>
-      <h2>Calculator</h2>
+      <h2>Experience Calculator</h2>
       <Row>
-        <input
-          type="checkbox"
-          checked={useLvls}
-          onChange={(event) => setUseLvls(event.currentTarget.checked)}
+        <Checkbox
+          label="Calculate with levels"
+          onChecked={(checked) => setUseLvls(checked)}
         />
-        <p>Calculate with levels</p>
       </Row>
       <CurrentInputField
         useLvls={useLvls}
-        currentExp={currentExp}
-        onCurrentExpChange={onCurrentExpChange}
+        currentExp={calculatorState.currentExp}
+        onCurrentExpChange={(value) => calculatorDispatch(setXp(value))}
       />
       <Row>
         <p>Target level</p>
         <NumberInputField
           value={targetLvl}
-          onValueChange={onChangeTargetLvl}
+          onValueChange={(value) => setTargetLvl(value)}
           max={99}
           min={2}
         />
       </Row>
-      <Calculations
-        currentExp={currentExp}
-        targetLvl={targetLvl}
-        xpa={xpa}
-        xps={xps}
-      />
+      <Calculations targetLvl={targetLvl} xpa={xpa} xps={xps} />
     </CalculatorCard>
   );
 };

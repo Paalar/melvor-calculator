@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "styled-components";
-import { SkillNamesType } from "../../common/skillNames";
-import { getColor } from "../../utils/getColor";
+import { SkillNamesType } from "common/skillNames";
+import { getColor } from "utils/getColor";
 import HeaderSvg from "./HeaderSvg";
+import { FC } from "react";
 
 interface Props {
   pageName: SkillNamesType;
@@ -25,7 +25,7 @@ const HeaderText = styled.h1`
   height: 10vh;
 `;
 
-const Header: React.FC<Props> = ({ pageName }) => {
+const Header: FC<Props> = ({ pageName }) => {
   return (
     <HeaderWrapper pageName={pageName}>
       <HeaderSvg name={pageName} />

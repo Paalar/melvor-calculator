@@ -1,5 +1,4 @@
 import { SkillNamesEnum, SkillNamesType } from "common/skillNames";
-import React from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
 

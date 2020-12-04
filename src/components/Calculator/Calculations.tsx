@@ -1,21 +1,23 @@
-import { FC } from "react";
-import {
-  experienceDifference,
-  calculateNumberOfActions,
-  calculateSecondsToTargetLvl,
-} from "data/experienceTable";
+import { FC, useContext } from "react";
 import { getCommaNumbers } from "utils/getCommaNumbers";
 import { getTimeText } from "utils/getTime";
 import Row from "common/Row";
+import { CalculatorContext } from "state/Calculator/Context";
+import {
+  calculateNumberOfActions,
+  calculateSecondsToTargetLvl,
+} from "calculations/common";
+import { experienceDifference } from "calculations/experience";
 
 type Props = {
-  currentExp: string;
   targetLvl: string;
   xpa?: number;
   xps: number;
 };
 
-const Calculations: FC<Props> = ({ currentExp, targetLvl, xpa, xps }) => {
+const Calculations: FC<Props> = ({ targetLvl, xpa, xps }) => {
+  const { calculatorState } = useContext(CalculatorContext);
+  const { currentExp } = calculatorState;
   const expToTarget = experienceDifference(
     Number(currentExp),
     Number(targetLvl) - 1

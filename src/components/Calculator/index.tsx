@@ -1,22 +1,57 @@
-import { FC, useState } from "react";
+import { getNumberOfUnlockables } from "calculations/mastery";
+import { Unlockables } from "pages/Woodcutting/data";
+import { FC, useContext } from "react";
+import { setItemMastery } from "state/Calculator/actions";
+import { CalculatorContext } from "state/Calculator/Context";
 import ExperienceCalculator from "./ExperienceCalculator";
+import MasteryCalculator from "./MasteryCalculator";
+import MasteryProgressBar from "./MasteryProgressBar";
 
 type Props = {
   xpa?: number;
   xps: number;
+  maxMastery: number;
+  items: { name: string; spa: number }[];
+  unlockables: Unlockables;
 };
 
-const Calculator: FC<Props> = ({ xpa, xps }) => {
-  const [currentExp, setCurrentExp] = useState<string>("0");
-  const onChangeCurrentExp = (value: string) => setCurrentExp(value);
+const Calculator: FC<Props> = ({
+  xpa,
+  xps,
+  maxMastery,
+  items,
+  unlockables,
+}) => {
+  const { calculatorDispatch, calculatorState } = useContext(CalculatorContext);
+  const setMastery = (index: number, mastery: string) => {
+    const newMastery = [...calculatorState.itemMastery];
+    newMastery[index] = mastery;
+    calculatorDispatch(setItemMastery(newMastery));
+  };
+  const maxMasteryPool = getNumberOfUnlockables(unlockables) * 500000;
   return (
     <>
-      <ExperienceCalculator
-        xpa={xpa}
-        xps={xps}
-        currentExp={currentExp}
-        onCurrentExpChange={onChangeCurrentExp}
-      />
+      <ExperienceCalculator xpa={xpa} xps={xps} />
+      {items.length ? (
+        <MasteryProgressBar
+          spa={items.map((item) => item.spa)}
+          itemMasteries={calculatorState.itemMastery}
+          maxMastery={maxMastery}
+          unlockables={unlockables}
+          maxMasteryPool={maxMasteryPool}
+        />
+      ) : null}
+      {items.map((item, index) => (
+        <MasteryCalculator
+          key={item.name}
+          maxMasteryPool={maxMasteryPool}
+          unlockables={unlockables}
+          maxMastery={maxMastery}
+          item={item}
+          setItemMastery={(mastery) => setMastery(index, mastery)}
+          itemMastery={calculatorState.itemMastery[index]}
+        />
+      ))}
     </>
   );
 };

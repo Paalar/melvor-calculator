@@ -1,3 +1,8 @@
+import { Extra } from "data/extras";
+import funcByOperator from "utils/funcByOperator";
+
+export type Unlockables = Record<number, number>;
+
 export const xpPerTreeType = {
   Normal: 10,
   Oak: 15,
@@ -22,12 +27,46 @@ export const cutTimePerTreeType: Record<TreeName, number> = {
   Redwood: 15,
 };
 
-export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
+export const unlockables: Unlockables = {
+  0: 1,
+  10: 1,
+  25: 1,
+  35: 1,
+  45: 1,
+  55: 1,
+  60: 1,
+  75: 1,
+  90: 1,
+};
 
-export const getXpsPerTree = (
+export const extraSkillCape: Extra = {
+  name: "skillCape",
+  operator: "*",
+  value: 0.5,
+};
+
+export const extraMasteryOfNature: Extra = {
+  name: "masterOfNature",
+  operator: "*",
+  value: 0.8,
+};
+
+export const maxMastery = 891;
+export const axeCutTimes = [1, 0.95, 0.85, 0.8, 0.7, 0.65, 0.6, 0.5];
+export const getSecondsPerTree = (
   treeName: TreeName,
-  timeReduction: number
-): number =>
-  xpPerTreeType[treeName] / (cutTimePerTreeType[treeName] * timeReduction);
+  timeReduction: number,
+  itemMastery: string,
+  extras: Extra[]
+): number => {
+  let seconds = cutTimePerTreeType[treeName] * timeReduction;
+  if (itemMastery === "99") seconds -= 0.2;
+  extras.forEach(
+    (extra) => (seconds = funcByOperator[extra.operator](seconds, extra.value))
+  );
+  return seconds;
+};
+export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>
+  xpPerTreeType[treeName] / secPerTree;
 
 export type TreeName = keyof typeof xpPerTreeType;

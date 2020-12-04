@@ -1,5 +1,5 @@
 import QualityPicker from "components/QualityPicker";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Option } from "react-dropdown";
 import Row from "common/Row";
 import TreeTypePicker from "./TreeTypePicker";
@@ -8,32 +8,60 @@ import { Card } from "common/Card";
 import styled from "styled-components";
 import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
-import { axeCutTimes, getXpsPerTree, TreeName } from "./data";
+import {
+  axeCutTimes,
+  extraMasteryOfNature,
+  extraSkillCape,
+  getSecondsPerTree,
+  getXpsPerTree,
+  maxMastery,
+  TreeName,
+  unlockables,
+} from "./data";
+import { CalculatorContext } from "state/Calculator/Context";
+import { Extra, removeExtra } from "data/extras";
 
 const Woodcutting: React.FC = () => {
+  const { calculatorState } = useContext(CalculatorContext);
+  const { itemMastery } = calculatorState;
+  const [speedExtras, setSpeedExtras] = useState<Extra[]>([]);
   const [multitree, setMultitree] = useState<boolean>(false);
   const [timeReduction, setTimeReduction] = useState<number>(axeCutTimes[0]);
-  const [xpa, setXpa] = useState<TreeName[]>([]);
+  const [trees, setTrees] = useState<TreeName[]>([]);
   const [xps, setXps] = useState<number[]>([]);
-  const [selectedTrees, setSelectedTrees] = useState<TreeName[]>([]);
+  const [spa, setSpa] = useState<number[]>([]);
 
-  const setXpPerTree = (treeIndex: number, option: Option) => {
-    const oldXpa = [...xpa];
+  const setTree = (treeIndex: number, option: Option) => {
+    const oldXpa = [...trees];
     oldXpa[treeIndex] = option.value as TreeName;
-    setXpa(oldXpa);
-    setSelectedTrees([...selectedTrees]);
+    setTrees(oldXpa);
   };
 
   const onCheck = () => {
     setMultitree(!multitree);
-    if (xpa.length > 1) xpa.pop();
+    if (trees.length > 1) trees.pop();
+  };
+
+  const onCheckedExtra = (extra: Extra) => (checked: boolean) => {
+    if (checked) setSpeedExtras([...speedExtras, extra]);
+    else setSpeedExtras(removeExtra(speedExtras, extra));
   };
 
   useEffect(() => {
-    const xps1 = getXpsPerTree(xpa[0], timeReduction);
-    const xps2 = xpa[1] ? getXpsPerTree(xpa[1], timeReduction) : 0;
+    const calculateSeconds = (index: number) =>
+      getSecondsPerTree(
+        trees[index],
+        timeReduction,
+        itemMastery[index],
+        speedExtras
+      );
+    const secPerTree1 = calculateSeconds(0);
+    const secPerTree2 = calculateSeconds(1);
+    const xps1 = getXpsPerTree(trees[0], secPerTree1);
+    const xps2 = trees[1] ? getXpsPerTree(trees[1], secPerTree2) : 0;
     setXps([xps1, xps2]);
-  }, [xpa, timeReduction]);
+    setSpa([secPerTree1, secPerTree2]);
+  }, [trees, timeReduction, speedExtras, itemMastery]);
 
   return (
     <>
@@ -42,6 +70,18 @@ const Woodcutting: React.FC = () => {
           <h2>Woodcutting Extras</h2>
           <Row>
             <Checkbox label="Multi-tree" onChecked={onCheck} />
+          </Row>
+          <Row>
+            <Checkbox
+              label="Woodcutting skillcape"
+              onChecked={onCheckedExtra(extraSkillCape)}
+            />
+          </Row>
+          <Row>
+            <Checkbox
+              label="Master of Nature"
+              onChecked={onCheckedExtra(extraMasteryOfNature)}
+            />
           </Row>
           <Row>
             <p>Axe</p>
@@ -57,22 +97,30 @@ const Woodcutting: React.FC = () => {
           <Row>
             <p>Tree</p>
             <TreeTypePicker
-              onChange={(option) => setXpPerTree(0, option)}
-              excludeTree={xpa[1]}
+              onChange={(option) => setTree(0, option)}
+              excludeTree={trees[1]}
             />
           </Row>
           {multitree && (
             <Row>
               <p>Tree 2</p>
               <TreeTypePicker
-                onChange={(option) => setXpPerTree(1, option)}
-                excludeTree={xpa[0]}
+                onChange={(option) => setTree(1, option)}
+                excludeTree={trees[0]}
               />
             </Row>
           )}
         </Card>
       </LocalExtras>
-      <Calculator xps={_.sum(xps)} />
+      <Calculator
+        xps={_.sum(xps)}
+        maxMastery={maxMastery}
+        items={trees.map((value, index) => ({
+          name: value,
+          spa: spa[index],
+        }))}
+        unlockables={unlockables}
+      />
     </>
   );
 };

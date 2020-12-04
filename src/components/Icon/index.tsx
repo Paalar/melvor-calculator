@@ -1,6 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import { SkillNamesType } from "../../common/skillNames";
+import { SkillNamesType } from "common/skillNames";
+import { FC } from "react";
 
 const Img = styled.img<{ size?: string }>`
   width: ${(props) => (props.size ? props.size : "32px")};
@@ -31,7 +31,7 @@ export const getSvgSrcFromPageName = (name: SkillNamesType) => {
   return `${iconMain}/${pathName}/${pathName}.svg`;
 };
 
-const Icon: React.FC<{ pageName: SkillNamesType; size?: string }> = ({
+const Icon: FC<{ pageName: SkillNamesType; size?: string }> = ({
   pageName,
   size,
 }) => {
