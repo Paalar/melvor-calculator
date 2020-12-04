@@ -1,3 +1,5 @@
+import { Extra } from "data/extras";
+import { Unlockables } from "pages/Woodcutting/data";
 
 export type OreNames = "Copper" | "Tin" | "Iron" | "Coal" | "Silver" | "Gold" | "Mithril" | "Adamantite" | "Runite" | "Dragonite";
 
@@ -28,3 +30,26 @@ export const respawnPerOre: Record<OreNames, number> = {
 }
 
 export const pickaxeTimes = [1, 0.95, 0.9, 0.85, 0.8, 0.7, 0.6, 0.5];
+
+export const unlockables: Unlockables = {
+    1: 3,
+    15: 1,
+    30: 2,
+    40: 1,
+    50: 1,
+    70: 1,
+    80: 1,
+    95: 1,
+}
+
+export const Mastery25: Extra = {
+    name: "mastery25",
+    operator: "*",
+    value: 0.1,
+};
+
+export const Mastery50: Extra = {
+    name: "mastery50",
+    operator: "-",
+    value: 0.2,
+};
