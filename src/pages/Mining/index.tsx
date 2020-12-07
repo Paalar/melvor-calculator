@@ -46,7 +46,7 @@ const Mining: FC = () => {
           <ReactDropdown
             options={["0", "1", "2", "3", "4"]}
             onChange={(opt: Option) =>
-              setPotionLevel(potionSpeeds[Number(opt.value) - 1])
+              setPotionLevel(potionSpeeds[Number(opt.value)])
             }
           />
         </Row>
