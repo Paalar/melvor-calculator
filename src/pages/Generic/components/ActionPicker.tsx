@@ -1,3 +1,4 @@
+import { initial } from "lodash";
 import { useState } from "react";
 import ReactDropdown, { Option } from "react-dropdown";
 import AbstractAction from "../classes/Action";
@@ -5,10 +6,11 @@ import AbstractAction from "../classes/Action";
 interface Props {
     actions: AbstractAction[];
     onChange: (action: AbstractAction) => void;
+    initial?: AbstractAction;
 }
 
-const ActionPicker: React.FC<Props> = ({ actions, onChange }) => {
-    const [selected, setSelected] = useState<string>("Pick an option");
+const ActionPicker: React.FC<Props> = ({ actions, onChange, initial }) => {
+    const [selected, setSelected] = useState<string>(initial?.name || "Pick an option");
     const actionNames = actions.map(action => action.name);
     const selectAction = (name: string) => actions.find(action => action.name === name);
 
