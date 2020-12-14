@@ -2,6 +2,7 @@ import { Extra } from "data/extras";
 import { Unlockables } from "pages/Woodcutting/data";
 
 export type OreNames =
+  "Rune Essence"
   | "Copper"
   | "Tin"
   | "Iron"
@@ -14,6 +15,7 @@ export type OreNames =
   | "Dragonite";
 
 export const xpPerOre: Record<OreNames, number> = {
+  "Rune Essence": 5,
   Copper: 7,
   Tin: 7,
   Iron: 14,
@@ -27,6 +29,7 @@ export const xpPerOre: Record<OreNames, number> = {
 };
 
 export const respawnPerOre: Record<OreNames, number> = {
+  "Rune Essence": 1,
   Copper: 5,
   Tin: 5,
   Iron: 10,

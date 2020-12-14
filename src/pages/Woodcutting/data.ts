@@ -61,7 +61,8 @@ export const getSecondsPerTree = (
   extras: Extra[]
 ): number => {
   const secs = cutTimePerTreeType[treeName] * timeReduction;
-  return getSecondsPerActionWithExtras(secs, Number(itemMastery), extras);
+  const masteryReducedSeconds = Number(itemMastery) === 99 ? secs - 2 : secs;
+  return getSecondsPerActionWithExtras(masteryReducedSeconds, extras);
 };
 
 export const getXpsPerTree = (treeName: TreeName, secPerTree: number): number =>
