@@ -13,7 +13,7 @@ import {
   unlockables,
 } from "./data";
 
-const potionSpeeds = [1, 1.1, 1.2, 1.4, 1.8];
+const potionHealthIncrease = [1, 1.1, 1.2, 1.4, 1.8];
 
 const Mining: FC = () => {
   const {
@@ -46,7 +46,7 @@ const Mining: FC = () => {
           <ReactDropdown
             options={["0", "1", "2", "3", "4"]}
             onChange={(opt: Option) =>
-              setPotionLevel(potionSpeeds[Number(opt.value)])
+              setPotionLevel(potionHealthIncrease[Number(opt.value)])
             }
           />
         </Row>
