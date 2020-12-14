@@ -44,7 +44,7 @@ const Mining: FC = () => {
         <Row>
           <p>Potion Level</p>
           <ReactDropdown
-            options={["0", "1", "2", "3", "4"]}
+            options={[...potionHealthIncrease.keys()].map(String)}
             onChange={(opt: Option) =>
               setPotionLevel(potionHealthIncrease[Number(opt.value)])
             }
