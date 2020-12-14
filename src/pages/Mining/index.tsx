@@ -1,3 +1,4 @@
+import { getNumberOfUnlockables } from "calculations/mastery";
 import Card from "common/Card";
 import Row from "common/Row";
 import Calculator from "components/Calculator";
@@ -86,8 +87,9 @@ const calculateXPperSecond = (
   potion: number,
   masteryLevel: number
 ) => {
-  const mastery50 = Number(masteryLevel) >= 2750000 ? 0.2 : 0;
-  const mastery25 = Number(masteryLevel) >= 1375000 ? 0.9 : 1;
+  const masteryPool = getNumberOfUnlockables(unlockables) * 500000;
+  const mastery50 = Number(masteryLevel) >= masteryPool * 0.5 ? 0.2 : 0;
+  const mastery25 = Number(masteryLevel) >= masteryPool * 0.25 ? 0.9 : 1;
   const xpsGivenInfiniteMining = xpPerOre[oreType] / (miningTime - mastery50);
   const oreHealth = oreMasteryLevel + 5;
   const respawnTime = respawnPerOre[oreType];
