@@ -19,9 +19,12 @@ export interface ActionProps {
 
 type Affect = "EXP" | "Mastery" | "Global" | "Speed";
 
+type Operator = "*" | "+" | "/" | "-";
+
 export interface Tool {
     name: string;
     affect: Affect;
+    operator: Operator;
     value: number;
 }
 

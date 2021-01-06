@@ -1,4 +1,3 @@
-import { initial } from "lodash";
 import { useState } from "react";
 import ReactDropdown, { Option } from "react-dropdown";
 import AbstractAction from "../classes/Action";

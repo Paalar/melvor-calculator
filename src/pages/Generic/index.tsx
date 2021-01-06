@@ -3,7 +3,9 @@ import Calculator from "components/Calculator";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { CalculatorContext } from "state/Calculator/Context";
 import AbstractAction from "./classes/Action";
+import { Tool } from "./classes/types";
 import ActionPicker from "./components/ActionPicker";
+import ToolPicker from "./components/ToolPicker";
 import Mining from "./skills/mining";
 
 interface Props {
@@ -18,6 +20,7 @@ const GenericPage: FC<Props> = ({ pageName }) => {
     const skill = skillSelector("Mining");
     const { calculatorState: { itemMastery } } = useContext(CalculatorContext);
     const [action, setAction] = useState<AbstractAction | null>(skill ? skill.actions[0] : null);
+    const [tool, setTool] = useState<Tool | null>(skill ? skill.tools[0] : null);
 
     useEffect(() => {
         if (action) {
@@ -27,12 +30,15 @@ const GenericPage: FC<Props> = ({ pageName }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemMastery])
 
-    if (!skill || !action) {
+    if (!skill || !action || !tool) {
         return (<Card title="TBA"><h2>TBA</h2></Card>);
     }
 
     return (
         <>
+            <Card title="Tool">
+                <ToolPicker tools={skill.tools} onChange={setTool} initial={tool} />
+            </Card>
             <Card title="Action">
                 <ActionPicker actions={skill.actions} onChange={setAction} initial={action} />
             </Card>

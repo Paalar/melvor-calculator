@@ -1,5 +1,5 @@
-import AbstractAction from "../classes/Action";
-import { ActionProps, Skill } from "../classes/types";
+import AbstractAction from "../../classes/Action";
+import { ActionProps} from "../../classes/types";
 
 interface OreProperties extends Omit<ActionProps, "amount" | "baseTime"> {
     amount?: number;
@@ -42,14 +42,4 @@ const OreNames = [
     {name: 'Dragonite', respawn: 120, xp: 101}
 ];
 const RegularOres = OreNames.map(({name, respawn, xp}) => new Ore({name, respawn, xp})); 
-const Ores = [RuneEssence, ...RegularOres];
-
-const Mining: Skill = {
-    name: "Mining",
-    tools: [],
-    actions: Ores,
-    maxMastery: 1089,
-    unlockables: {1: OreNames.length},
-}
-
-export default Mining;
+export const Ores = [RuneEssence, ...RegularOres];
