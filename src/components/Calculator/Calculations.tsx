@@ -3,27 +3,21 @@ import { getCommaNumbers } from "utils/getCommaNumbers";
 import { getTimeText } from "utils/getTime";
 import Row from "common/Row";
 import { CalculatorContext } from "state/Calculator/Context";
-import {
-  calculateNumberOfActions,
-  calculateSecondsToTargetLvl,
-} from "calculations/common";
-import { experienceDifference } from "calculations/experience";
 
 type Props = {
   targetLvl: string;
-  xpa?: number;
-  xps: number;
+  secondsToTarget: number;
+  expToTarget: number;
 };
 
-const Calculations: FC<Props> = ({ targetLvl, xpa, xps }) => {
+const Calculations: FC<Props> = ({
+  targetLvl,
+  secondsToTarget,
+  expToTarget,
+}) => {
   const { calculatorState } = useContext(CalculatorContext);
   const { currentExp } = calculatorState;
-  const expToTarget = experienceDifference(
-    Number(currentExp),
-    Number(targetLvl) - 1
-  );
-  const actionsToTarget = calculateNumberOfActions(expToTarget, Number(xpa));
-  const secondsToTarget = calculateSecondsToTargetLvl(expToTarget, xps);
+
   if (expToTarget <= 0) return null;
   return (
     <>
@@ -31,16 +25,6 @@ const Calculations: FC<Props> = ({ targetLvl, xpa, xps }) => {
         <Row>
           <p>Experience to reach target:</p>
           <p>{getCommaNumbers(expToTarget)}</p>
-        </Row>
-      ) : null}
-      {xpa ? (
-        <Row>
-          <p>Number of actions:</p>
-          <p>
-            {currentExp.length && targetLvl.length
-              ? getCommaNumbers(actionsToTarget)
-              : null}
-          </p>
         </Row>
       ) : null}
       <Row>

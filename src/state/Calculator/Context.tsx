@@ -7,6 +7,7 @@ type State = {
   masteryPool: string;
   playerMastery: string;
   itemMastery: string[];
+  secondsToTarget: number;
 };
 
 type CalculatorContextProps = {
@@ -22,6 +23,7 @@ const initialState: State = {
   masteryPool: "0",
   playerMastery: "1",
   itemMastery: ["1", "1"], // The second element is used for woodcutting with multiple axes
+  secondsToTarget: Number.POSITIVE_INFINITY,
 };
 
 const CalculatorReducer = (state: State, action: CalculatorAction): State => {
@@ -39,6 +41,8 @@ const CalculatorReducer = (state: State, action: CalculatorAction): State => {
       return { ...state, itemMastery: [...action.payload] };
     case CalculatorActionTypes.SET_MASTERY_XP:
       return { ...state, masteryPool: action.payload };
+    case CalculatorActionTypes.SET_SECONDS_TO_TARGET:
+      return { ...state, secondsToTarget: action.payload };
     case CalculatorActionTypes.RESET:
       return { ...initialState };
     default:

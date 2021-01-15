@@ -8,7 +8,6 @@ import MasteryCalculator from "./MasteryCalculator";
 import MasteryProgressBar from "./MasteryProgressBar";
 
 type Props = {
-  xpa?: number;
   xps: number;
   maxMastery: number;
   items: { name: string; spa: number }[];
@@ -16,11 +15,11 @@ type Props = {
 };
 
 const Calculator: FC<Props> = ({
-  xpa,
-  xps,
   maxMastery,
   items,
   unlockables,
+  xps,
+  children,
 }) => {
   const { calculatorDispatch, calculatorState } = useContext(CalculatorContext);
   const setMastery = (index: number, mastery: string) => {
@@ -31,7 +30,7 @@ const Calculator: FC<Props> = ({
   const maxMasteryPool = getNumberOfUnlockables(unlockables) * 500000;
   return (
     <>
-      <ExperienceCalculator xpa={xpa} xps={xps} />
+      <ExperienceCalculator xps={xps}>{children}</ExperienceCalculator>
       {items.length ? (
         <MasteryProgressBar
           spa={items.map((item) => item.spa)}

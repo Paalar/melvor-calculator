@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import Row from "common/Row";
 import styled from "styled-components";
 import { Card } from "common/Card";
@@ -7,19 +7,31 @@ import CurrentInputField from "./CurrentInputField";
 import NumberInputField from "components/NumberInputField";
 import Checkbox from "components/Checkbox";
 import { CalculatorContext } from "state/Calculator/Context";
-import { setXp } from "state/Calculator/actions";
+import { setSecondsToTarget, setXp } from "state/Calculator/actions";
+import { experienceDifference } from "calculations/experience";
+import { calculateSecondsToTargetLvl } from "calculations/common";
 
 type Props = {
-  xpa?: number;
   xps: number;
 };
 
 const CalculatorCard = styled(Card)``;
 
-const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
+const ExperienceCalculator: FC<Props> = ({ xps, children }) => {
   const { calculatorDispatch, calculatorState } = useContext(CalculatorContext);
+  const { currentExp } = calculatorState;
   const [targetLvl, setTargetLvl] = useState<string>("99");
   const [useLvls, setUseLvls] = useState<boolean>(false);
+
+  const expToTarget = experienceDifference(
+    Number(currentExp),
+    Number(targetLvl) - 1
+  );
+
+  const secondsToTarget = calculateSecondsToTargetLvl(expToTarget, xps);
+  useEffect(() => {
+    calculatorDispatch(setSecondsToTarget(secondsToTarget));
+  }, [secondsToTarget, calculatorDispatch]);
 
   return (
     <CalculatorCard>
@@ -44,7 +56,12 @@ const ExperienceCalculator: FC<Props> = ({ xpa, xps }) => {
           min={2}
         />
       </Row>
-      <Calculations targetLvl={targetLvl} xpa={xpa} xps={xps} />
+      <Calculations
+        targetLvl={targetLvl}
+        secondsToTarget={secondsToTarget}
+        expToTarget={expToTarget}
+      />
+      {children}
     </CalculatorCard>
   );
 };
