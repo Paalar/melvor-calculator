@@ -4,7 +4,7 @@ import { Option } from "react-dropdown";
 import Row from "common/Row";
 import TreeTypePicker from "./TreeTypePicker";
 import _ from "lodash";
-import { Card } from "common/Card";
+import Card from "common/Card";
 import styled from "styled-components";
 import Checkbox from "components/Checkbox";
 import Calculator from "components/Calculator";
