@@ -12,7 +12,7 @@ export enum QualitiesEnum {
   Dragon,
 }
 
-const qualityStrings = Object.keys(QualitiesEnum).filter((key) =>
+export const qualityStrings = Object.keys(QualitiesEnum).filter((key) =>
   Number.isNaN(Number(key))
 );
 const qualityOptions: Option[] = (qualityStrings as (keyof typeof QualitiesEnum)[]).map(

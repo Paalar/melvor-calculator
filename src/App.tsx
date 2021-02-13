@@ -6,8 +6,8 @@ import Woodcutting from "pages/Woodcutting";
 import Mining from "pages/Mining";
 import Page from "./Page";
 import "./App.css";
-import { Card } from "common/Card";
 import { CalculatorProvider } from "state/Calculator/Context";
+import GenericPage from "pages/Generic";
 
 const PageDivider = styled.div`
   display: grid;
@@ -28,11 +28,7 @@ const CurrentComponent: FC<CurrentComponentProps> = ({ pageName }) => {
     case SkillNamesEnum[SkillNamesEnum.Mining]:
       return <Mining />;
     default:
-      return (
-        <Card>
-          <h2>TBA</h2>
-        </Card>
-      );
+      return <GenericPage pageName={pageName} />;
   }
 };
 
